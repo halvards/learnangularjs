@@ -1,3 +1,6 @@
+out
+target
+tmp
 .DS_Store
 .idea
 *.iml

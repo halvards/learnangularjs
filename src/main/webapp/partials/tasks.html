@@ -1,0 +1,5 @@
+<div ng-controller="TasksController">
+    <label for="task">Tasks</label>
+    <select id="task" ng-model="task" ng-options="task.description for task in tasks"></select>
+    <p>You have selected {{task.name}}</p>
+</div>
