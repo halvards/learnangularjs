@@ -66,11 +66,10 @@
                     <browser>phantomjs;build/phantomjs-jstd-bridge.js</browser>
                     <captureConsole>true</captureConsole>
                     <config>jsTestDriver.conf</config>
-                    <port>9877</port>
-                    <!--<runnerMode>DEBUG</runnerMode>-->
+                    <port>9879</port>
                     <testOutput>${project.build.directory}/jstd-reports</testOutput>
                     <tests>all</tests>
-                    <!--<verbose>true</verbose>-->
+                    <verbose>true</verbose>
                 </configuration>
                 <executions>
                     <execution>
@@ -80,6 +79,39 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>jshint</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask" classpathref="maven.plugin.classpath"/>
+                                <jshint dir="${project.basedir}/src/main/webapp/js"
+                                        globals="jQuery=true, angular=true, $=true, TasksController=true"
+                                        optionsFile="build/jshint-options.properties">
+                                    <include name="*.js"/>
+                                    <exclude name="lib/**/*.js"/>
+                                    <report type="xml" destFile="${project.build.directory}/jshint-report.xml" />
+                                </jshint>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.philmander.jshint</groupId>
+                        <artifactId>ant-jshint</artifactId>
+                        <version>0.3.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
