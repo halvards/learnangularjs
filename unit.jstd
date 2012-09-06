@@ -1,0 +1,18 @@
+load:
+  - src/test/webapp/js/lib/jasmine.js
+  - src/test/webapp/js/lib/JasmineAdapter.js
+  - src/main/webapp/js/lib/angular.js
+  - src/main/webapp/js/lib/angular-resource.js
+  - src/test/webapp/js/lib/angular-mocks.js
+  - src/main/webapp/js/*.js
+
+test:
+  - src/test/webapp/js/unit/*-spec.js
+
+plugin:
+  - name: "testisolation"
+    jar: "build/testisolation-nodeps-1.3.3d.jar"
+    module: "com.google.jstestdriver.plugins.testisolation.TestIsolationInitializer"
+#  - name: "coverage"
+#    jar: "build/coverage-1.3.3d.jar"
+#    module: "com.google.jstestdriver.coverage.CoverageModule"

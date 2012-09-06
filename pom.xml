@@ -61,21 +61,66 @@
                 <groupId>com.googlecode.jstd-maven-plugin</groupId>
                 <artifactId>jstd-maven-plugin</artifactId>
                 <version>1.3.2.5</version>
-                <configuration>
-                    <!--<browser>open</browser>-->
-                    <browser>phantomjs;build/phantomjs-jstd-bridge.js</browser>
-                    <captureConsole>true</captureConsole>
-                    <config>jsTestDriver.conf</config>
-                    <port>9879</port>
-                    <testOutput>${project.build.directory}/jstd-reports</testOutput>
-                    <tests>all</tests>
-                    <verbose>true</verbose>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>run-tests</id>
+                        <id>unittests</id>
+                        <phase>test</phase>
                         <goals>
                             <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <!--<browser>open</browser>-->
+                            <browser>phantomjs;build/phantomjs-jstd-bridge.js</browser>
+                            <captureConsole>true</captureConsole>
+                            <config>unit.jstd</config>
+                            <port>9879</port>
+                            <testOutput>${project.build.directory}/jstd-unit-reports</testOutput>
+                            <tests>all</tests>
+                            <!--<verbose>true</verbose>-->
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>e2etests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <!--<browser>open</browser>-->
+                            <browser>phantomjs;build/phantomjs-jstd-bridge.js</browser>
+                            <captureConsole>true</captureConsole>
+                            <config>e2e.jstd</config>
+                            <port>9880</port>
+                            <testOutput>${project.build.directory}/jstd-e2e-reports</testOutput>
+                            <tests>all</tests>
+                            <!--<verbose>true</verbose>-->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.0-beta-1</version>
+                <executions>
+                    <execution>
+                        <id>start-tomcat</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <fork>true</fork>
+                            <ignorePackaging>true</ignorePackaging>
+                            <path>/</path>
+                            <port>8000</port>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-tomcat</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>shutdown</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -85,9 +130,31 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.7</version>
                 <executions>
+                    <!--<execution>-->
+                        <!--<id>start-node-webserver</id>-->
+                        <!--<phase>pre-integration-test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>run</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<target>-->
+                                <!--<parallel>-->
+                                    <!--<daemons>-->
+                                        <!--<exec executable="node" dir="src/main/webapp">-->
+                                            <!--<arg value="../../../build/web-server.js"/>-->
+                                            <!--<arg value="8000"/>-->
+                                        <!--</exec>-->
+                                    <!--</daemons>-->
+                                <!--</parallel>-->
+                            <!--</target>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                     <execution>
                         <id>jshint</id>
                         <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
                         <configuration>
                             <target>
                                 <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask" classpathref="maven.plugin.classpath"/>
@@ -96,13 +163,10 @@
                                         optionsFile="build/jshint-options.properties">
                                     <include name="*.js"/>
                                     <exclude name="lib/**/*.js"/>
-                                    <report type="xml" destFile="${project.build.directory}/jshint-report.xml" />
+                                    <report type="xml" destFile="${project.build.directory}/jshint-report.xml"/>
                                 </jshint>
                             </target>
                         </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
                     </execution>
                 </executions>
                 <dependencies>

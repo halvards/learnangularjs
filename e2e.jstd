@@ -1,0 +1,15 @@
+load:
+  - src/test/webapp/js/lib/angular-scenario.js
+  - src/test/webapp/js/lib/jstd-scenario-adapter-config.js
+  - src/test/webapp/js/lib/jstd-scenario-adapter.js
+
+test:
+  - src/test/webapp/js/e2e/*-scenario.js
+
+proxy:
+ - {matcher: "*", server: "http://localhost:8000"}
+
+#plugin:
+#  - name: "testisolation"
+#    jar: "build/testisolation-nodeps-1.3.3d.jar"
+#    module: "com.google.jstestdriver.plugins.testisolation.TestIsolationInitializer"
