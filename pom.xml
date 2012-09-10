@@ -15,22 +15,6 @@
         <tomcat7Version>7.0.30</tomcat7Version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>com.googlecode.jstd-maven-plugin-repo</id>
-            <name>jstd-maven-plugin Google Code repository</name>
-            <url>http://jstd-maven-plugin.googlecode.com/svn/maven2</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>com.googlecode.jstd-maven-plugin-plugin-repo</id>
-            <name>jstd-maven-plugin Google Code plugin repository</name>
-            <url>http://jstd-maven-plugin.googlecode.com/svn/maven2</url>
-        </pluginRepository>
-    </pluginRepositories>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -101,6 +85,17 @@
                             <goal>shutdown</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>create-executable-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec-war-only</goal>
+                        </goals>
+                        <configuration>
+                            <!-- http://tomcat.apache.org/maven-plugin-2/executable-war-jar.html -->
+                            <path>/</path>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -115,15 +110,16 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
+                            <!-- https://github.com/philmander/ant-jshint -->
                             <target>
                                 <echo message="-------------------------------------------"/>
                                 <echo message=" J S  H I N T                              "/>
                                 <echo message="-------------------------------------------"/>
-                                <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask" classpathref="maven.plugin.classpath"/>
+                                <taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask" classpath="${project.basedir}/build/ant-jshint-0.3.1.jar"/>
                                 <jshint dir="${project.basedir}/src/main/webapp/js"
-                                        globals="jQuery=true, angular=true, $=true, TasksController=true"
+                                        globals="jQuery=true, angular=true, $=true"
                                         optionsFile="build/jshint-options.properties">
-                                    <include name="*.js"/>
+                                    <include name="app/**/*.js"/>
                                     <exclude name="lib/**/*.js"/>
                                     <report type="xml" destFile="${project.build.directory}/jshint-report.xml"/>
                                 </jshint>
@@ -137,6 +133,10 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
+                            <!-- Download JS Test Driver from http://code.google.com/p/js-test-driver/downloads/list?can=1 -->
+                            <!-- Command line flags: http://code.google.com/p/js-test-driver/wiki/CommandLineFlags -->
+                            <!-- Download PhantomJS from: http://phantomjs.org/download.html -->
+                            <!-- Mac users: Install PhantomJS using homebrew -->
                             <target>
                                 <echo message="-------------------------------------------"/>
                                 <echo message=" J S  T E S T  D R I V E R  -  U N I T     "/>
@@ -187,13 +187,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.philmander.jshint</groupId>
-                        <artifactId>ant-jshint</artifactId>
-                        <version>0.3.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

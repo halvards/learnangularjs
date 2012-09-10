@@ -5,7 +5,6 @@
 describe('Todo List App', function () {
 
     it('should echo task type selection', function () {
-//    browser().navigateTo('http://localhost:8000/index.html#/tasks');
         browser().navigateTo('/index.html#/tasks');
         window.top.console.log("logging works");
         expect(browser().location().url()).toBe('/tasks');

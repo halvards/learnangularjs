@@ -1,7 +1,7 @@
 load:
-  - src/test/webapp/js/lib/angular-scenario.js
-  - src/test/webapp/js/lib/jstd-scenario-adapter-config.js
-  - src/test/webapp/js/lib/jstd-scenario-adapter.js
+  - src/test/webapp/js/lib/e2e/angular-scenario.js
+  - src/test/webapp/js/lib/e2e/jstd-scenario-adapter-config.js
+  - src/test/webapp/js/lib/e2e/jstd-scenario-adapter.js
 
 test:
   - src/test/webapp/js/e2e/*-scenario.js
