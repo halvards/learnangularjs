@@ -7,7 +7,8 @@ test:
   - src/test/webapp/js/e2e/*-scenario.js
 
 proxy:
- - {matcher: "*", server: "http://localhost:8000"}
+  - matcher: "*"
+    server: "http://localhost:8000"
 
 plugin:
   - name: "testisolation"
