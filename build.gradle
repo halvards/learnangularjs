@@ -5,13 +5,89 @@ subprojects {
     apply plugin: 'eclipse'
 }
 
+// Ensure the IWS Workspace file is also deleted (this is not the default)
+task cleanIdea(dependsOn: [cleanIdeaProject, cleanIdeaWorkspace, cleanIdeaModule], type: Delete, overwrite: true)
+
+// Tell IntelliJ IDEA that the VCS for this project is Git
 idea.project.ipr {
     withXml { provider ->
         provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
     }
 }
 
-// Should the parent directory have an IML file?
-//task idea(dependsOn: [ideaProject, ideaWorkspace], overwrite: true)
-//task cleanIdea(dependsOn: [cleanIdeaProject, cleanIdeaWorkspace], type: Delete, overwrite: true)
+def startServerRunConfiguration = '''
+    <configuration default="false" name="Run Server" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.thoughtworks.learnangularjs.server.TomcatServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="service" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+'''
 
+def clientUnitTestRunConfiguration = '''
+    <configuration default="false" name="Client Unit Tests" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
+      <setting name="configLocationType" value="CONFIG_FILE" />
+      <setting name="settingsFile" value="$PROJECT_DIR$/client/unit.jstd" />
+      <setting name="serverType" value="INTERNAL" />
+      <RunnerSettings RunnerId="JsTestDriverClientRunner" />
+      <ConfigurationWrapper RunnerId="JsTestDriverClientRunner" />
+      <method />
+    </configuration>
+'''
+
+def e2eTestRunConfiguration = '''
+    <configuration default="false" name="E2E Scenario Tests" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
+      <setting name="configLocationType" value="CONFIG_FILE" />
+      <setting name="settingsFile" value="$PROJECT_DIR$/client/e2e.jstd" />
+      <setting name="serverType" value="INTERNAL" />
+      <RunnerSettings RunnerId="JsTestDriverClientRunner" />
+      <ConfigurationWrapper RunnerId="JsTestDriverClientRunner" />
+      <method />
+    </configuration>
+'''
+
+def serviceUnitTestRunConfiguration = '''
+    <configuration default="false" name="Service Unit Tests" type="JUnit" factoryName="JUnit">
+      <module name="service" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+'''
+
+// Add run configuration for TomcatServer
+idea.workspace.iws {
+    withXml { workspace ->
+        def runManagerComponentNode = workspace.node.component.find { it.@name == 'RunManager' }
+        runManagerComponentNode.append(new XmlParser().parseText(startServerRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(clientUnitTestRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(e2eTestRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(serviceUnitTestRunConfiguration))
+    }
+}

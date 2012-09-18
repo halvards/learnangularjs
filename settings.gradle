@@ -1,3 +1,5 @@
 rootProject.name = 'learnangularjs'
 include 'service', 'client'
 
+project(':service').buildFileName = 'service.gradle'
+project(':client').buildFileName = 'client.gradle'

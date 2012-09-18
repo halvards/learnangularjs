@@ -28,6 +28,7 @@ dependencies {
     def springFrameworkVersion = '3.1.2.RELEASE'
     def springSecurityVersion = '3.1.2.RELEASE'
 
+    def commonsCliVersion = '1.2'
     def hamcrestVersion = '1.3'
     def junitVersion = '4.10'
 
@@ -50,7 +51,8 @@ dependencies {
     testCompile "junit:junit:${junitVersion}",
             "org.hamcrest:hamcrest-core:${hamcrestVersion}",
             "org.hamcrest:hamcrest-library:${hamcrestVersion}",
-            "org.springframework:spring-test:${springFrameworkVersion}"
+            "org.springframework:spring-test:${springFrameworkVersion}",
+            "commons-cli:commons-cli:${commonsCliVersion}"
 
     providedCompile "javax.servlet:javax.servlet-api:${servletApiVersion}",
             "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
@@ -70,6 +72,11 @@ task startserver(dependsOn: testClasses) << {
                     fork: true,
                     failonerror: true,
                     timeout: serverTimeoutMillis) {
+                // set application paths relative to the base directory of this sub-project
+                arg(value: '--serviceBaseDir')
+                arg(value: 'src/main/webapp')
+                arg(value: '--clientBaseDir')
+                arg(value: '../client/src/main/webapp')
             }
         }
         ant.waitfor(maxwait: 1, maxwaitunit: 'minute', checkevery: 100, checkeveryunit: 'millisecond') {
