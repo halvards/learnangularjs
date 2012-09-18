@@ -1,9 +1,13 @@
+build
 out
 target
 tmp
 .DS_Store
+.gradle
 .idea
 *.iml
 *.ipr
+*.iws
+*.log
 *.swp
 

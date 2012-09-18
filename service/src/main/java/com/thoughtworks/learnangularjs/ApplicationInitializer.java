@@ -23,7 +23,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         mvcContext.register(MvcConfig.class);
         ServletRegistration.Dynamic appServlet = servletContext.addServlet("dispatcherServlet", new DispatcherServlet(mvcContext));
         appServlet.setLoadOnStartup(1);
-        Set<String> mappingConflicts = appServlet.addMapping("/app");
+        Set<String> mappingConflicts = appServlet.addMapping("/service");
         if (!mappingConflicts.isEmpty()) {
             throw new IllegalStateException("'dispatcherServlet' cannot be mapped to '/' under Tomcat versions <= 7.0.14");
         }

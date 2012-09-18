@@ -1,0 +1,17 @@
+apply plugin: 'idea'
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+}
+
+idea.project.ipr {
+    withXml { provider ->
+        provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+    }
+}
+
+// Should the parent directory have an IML file?
+//task idea(dependsOn: [ideaProject, ideaWorkspace], overwrite: true)
+//task cleanIdea(dependsOn: [cleanIdeaProject, cleanIdeaWorkspace], type: Delete, overwrite: true)
+

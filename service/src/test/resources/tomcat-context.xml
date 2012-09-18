@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resources className="org.apache.naming.resources.VirtualDirContext"
+               extraResourcePaths="/app=../client/src/main/webapp" />
+</Context>
+

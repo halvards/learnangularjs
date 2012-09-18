@@ -1,0 +1,80 @@
+idea.module.iml {
+    withXml { module ->
+        module.node.@type = 'WEB_MODULE'
+        module.node.component.orderEntry.find { it.@type == 'inheritedJdk' }.replaceNode {}
+    }
+}
+
+task clean(type: Delete) {
+    delete 'build'
+}
+
+task test << {
+    logging.setLevel(LogLevel.INFO)
+    def unitTestReportDir = "${buildDir}/jstd-unit-reports"
+    mkdir unitTestReportDir
+    println '-------------------------------------------'
+    println ' J S  T E S T  D R I V E R  -  U N I T     '
+    println '-------------------------------------------'
+    ant.java(jar: 'support/jstestdriver-1.3.3d.jar',
+             fork: true,
+             failonerror: true,
+             timeout: 60000) {
+        arg(value: '--browser')
+        arg(value: 'phantomjs;support/phantomjs-jstd-bridge.js')
+        arg(value: '--captureConsole')
+        arg(value: 'true')
+        arg(value: '--config')
+        arg(value: 'unit.jstd')
+        arg(value: '--port')
+        arg(value: '9879')
+        arg(value: '--testOutput')
+        arg(value: unitTestReportDir)
+        arg(value: '--tests')
+        arg(value: 'all')
+    }
+}
+
+task scenariotest(dependsOn: ':service:startserver') << {
+    logging.setLevel(LogLevel.INFO)
+    def e2eTestReportDir = "${buildDir}/jstd-e2e-reports"
+    mkdir e2eTestReportDir
+    println '-------------------------------------------'
+    println ' J S  T E S T  D R I V E R  -  E 2 E       '
+    println '-------------------------------------------'
+    ant.java(jar: 'support/jstestdriver-1.3.3d.jar',
+             fork: true,
+             failonerror: true,
+             timeout: 300000) {
+        arg(value: '--browser')
+        arg(value: 'phantomjs;support/phantomjs-jstd-bridge.js')
+        arg(value: '--captureConsole')
+        arg(value: 'true')
+        arg(value: '--config')
+        arg(value: 'e2e.jstd')
+        arg(value: '--port')
+        arg(value: '9880')
+        arg(value: '--testOutput')
+        arg(value: e2eTestReportDir)
+        arg(value: '--tests')
+        arg(value: 'all')
+    }
+}
+
+task jshint << {
+    logging.setLevel(LogLevel.INFO)
+    def jsHintReportFile = "${buildDir}/jshint-report.xml"
+    outputs.file jsHintReportFile
+    println '-------------------------------------------'
+    println ' J S  H I N T                              '
+    println '-------------------------------------------'
+    ant.taskdef(name: 'jshint', classname: 'com.philmander.jshint.JsHintAntTask', classpath: 'support/ant-jshint-0.3.1.jar')
+    ant.jshint(dir: 'src/main/webapp/js',
+               globals: 'jQuery=true, $=true, angular=true',
+               optionsFile: "${projectDir}/support/jshint-options.properties") {
+        include(name: 'app/**/*.js')
+        exclude(name: 'lib/**/*.js')
+        report(type: 'xml', destFile: jsHintReportFile)
+    }
+}
+

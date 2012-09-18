@@ -8,9 +8,10 @@ test:
 
 proxy:
   - matcher: "*"
-    server: "http://localhost:8000"
+    server: "http://localhost:8000/app"
 
 plugin:
   - name: "testisolation"
-    jar: "build/testisolation-nodeps-1.3.3d.jar"
+    jar: "support/testisolation-nodeps-1.3.3d.jar"
     module: "com.google.jstestdriver.plugins.testisolation.TestIsolationInitializer"
+
