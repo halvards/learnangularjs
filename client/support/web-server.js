@@ -11,7 +11,12 @@ var DEFAULT_PORT = 8000;
 function main(argv) {
   new HttpServer({
     'GET': createServlet(StaticServlet),
-    'HEAD': createServlet(StaticServlet)
+    'HEAD': createServlet(StaticServlet),
+    'OPTIONS': createServlet(StaticServlet),
+    'POST': createServlet(StaticServlet),
+    'PUT': createServlet(StaticServlet),
+    'DELETE': createServlet(StaticServlet),
+    'TRACE': createServlet(StaticServlet)
   }).start(Number(argv[2]) || DEFAULT_PORT);
 }
 
