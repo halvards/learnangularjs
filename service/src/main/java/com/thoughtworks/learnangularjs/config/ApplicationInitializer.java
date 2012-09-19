@@ -1,4 +1,4 @@
-package com.thoughtworks.learnangularjs;
+package com.thoughtworks.learnangularjs.config;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -10,6 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import java.util.Set;
 
+/**
+ * https://github.com/kolorobot/spring-mvc-quickstart-archetype/blob/master/src/main/resources/archetype-resources/src/main/java/config/WebAppInitializer.java
+ */
 public class ApplicationInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -20,12 +23,12 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servletContext.setInitParameter("defaultXmlEscape", "true");
 
         AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext();
-        mvcContext.register(MvcConfig.class);
+        mvcContext.register(WebConfig.class);
         ServletRegistration.Dynamic appServlet = servletContext.addServlet("dispatcherServlet", new DispatcherServlet(mvcContext));
         appServlet.setLoadOnStartup(1);
-        Set<String> mappingConflicts = appServlet.addMapping("/service");
+        Set<String> mappingConflicts = appServlet.addMapping("/*");
         if (!mappingConflicts.isEmpty()) {
-            throw new IllegalStateException("'dispatcherServlet' cannot be mapped to '/' under Tomcat versions <= 7.0.14");
+            throw new IllegalStateException("'dispatcherServlet' cannot be mapped to '/' under Tomcat");
         }
     }
 }

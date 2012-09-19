@@ -1,3 +1,5 @@
+def version = '1.0'
+
 apply plugin: 'war'
 
 idea.module {
@@ -18,11 +20,15 @@ configurations {
     gradleIdea
 }
 
+jar.manifest {
+    attributes("Implementation-Title": "Learn AngularJS", "Implementation-Version": version)
+}
+
 dependencies {
     def cglibVersion = '2.2.2'
     def commonsLangVersion = '2.6'
     def guavaVersion = '13.0.1'
-    def jacksonVersion = '1.9.9'
+    def jacksonVersion = '2.0.6'
     def jodaTimeVersion = '2.1'
     def slf4jVersion = '1.7.0'
     def springFrameworkVersion = '3.1.2.RELEASE'
@@ -37,7 +43,7 @@ dependencies {
 
     compile "org.springframework:spring-webmvc:${springFrameworkVersion}",
             "cglib:cglib:${cglibVersion}",
-            "org.codehaus.jackson:jackson-mapper-asl:${jacksonVersion}",
+            "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
             "org.springframework.security:spring-security-config:${springSecurityVersion}",
             "org.springframework.security:spring-security-web:${springSecurityVersion}",
             "com.google.guava:guava:${guavaVersion}",
@@ -57,7 +63,7 @@ dependencies {
     providedCompile "javax.servlet:javax.servlet-api:${servletApiVersion}",
             "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-log4j:${tomcatVersion}"
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
 
     gradleIdea "org.apache.ivy:ivy:2.2.0"
 }
@@ -71,17 +77,19 @@ task startserver(dependsOn: testClasses) << {
                     classpath: sourceSets.test.runtimeClasspath.asPath,
                     fork: true,
                     failonerror: true,
-                    timeout: serverTimeoutMillis) {
-                // set application paths relative to the base directory of this sub-project
-                arg(value: '--serviceBaseDir')
-                arg(value: 'src/main/webapp')
-                arg(value: '--clientBaseDir')
-                arg(value: '../client/src/main/webapp')
-            }
+                    timeout: serverTimeoutMillis)
         }
         ant.waitfor(maxwait: 1, maxwaitunit: 'minute', checkevery: 100, checkeveryunit: 'millisecond') {
             ant.http(url: 'http://127.0.0.1:8000/app/index.html')
         }
     }
+}
+
+task runService(dependsOn: testClasses) << {
+    logging.setLevel(LogLevel.INFO)
+    ant.java(classname: 'com.thoughtworks.learnangularjs.server.TomcatServer',
+            classpath: sourceSets.test.runtimeClasspath.asPath,
+            fork: true,
+            failonerror: true)
 }
 

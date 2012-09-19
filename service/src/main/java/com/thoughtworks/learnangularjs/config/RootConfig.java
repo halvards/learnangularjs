@@ -1,4 +1,4 @@
-package com.thoughtworks.learnangularjs;
+package com.thoughtworks.learnangularjs.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -7,7 +7,7 @@ import org.springframework.jmx.export.MBeanExporter;
 import org.springframework.jmx.support.MBeanServerFactoryBean;
 
 @Configuration
-@ComponentScan(basePackages = {"com.thoughtworks.learnangularjs"})
+@ComponentScan(basePackages = {"com.thoughtworks.learnangularjs.domain"})
 public class RootConfig {
     @Bean
     public static MBeanExporter mBeanExporter() {

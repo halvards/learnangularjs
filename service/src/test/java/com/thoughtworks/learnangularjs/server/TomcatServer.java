@@ -5,15 +5,10 @@ import org.apache.catalina.deploy.FilterDef;
 import org.apache.catalina.deploy.FilterMap;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.commons.cli.*;
+import org.apache.tomcat.util.scan.StandardJarScanner;
 
 public class TomcatServer {
-    // These default directories are relative to the root project directory, they are overridden in the Gradle build script
-    private static final String DEFAULT_SERVICE_BASE_DIR = "service/src/main/webapp";
-    private static final String DEFAULT_CLIENT_BASE_DIR = "client/src/main/webapp";
     private static final String DEFAULT_PORT = "8000";
-
-    private static final String OPTION_SERVICE_BASE_DIR = "serviceBaseDir";
-    private static final String OPTION_CLIENT_BASE_DIR = "clientBaseDir";
     private static final String OPTION_PORT = "port";
     private static final String OPTION_HELP = "help";
 
@@ -28,13 +23,12 @@ public class TomcatServer {
         tomcat.setBaseDir(System.getProperty("java.io.tmpdir"));
         tomcat.getHost().setAppBase(System.getProperty("user.dir"));
 
-        Context applicationContext = tomcat.addWebapp("/service", commandLine
-                .getOptionValue(OPTION_SERVICE_BASE_DIR, DEFAULT_SERVICE_BASE_DIR));
-        Context staticFilesContext = tomcat.addWebapp("/app", commandLine
-                .getOptionValue(OPTION_CLIENT_BASE_DIR, DEFAULT_CLIENT_BASE_DIR));
+        Context serviceContext = tomcat.addWebapp("/service", "src/main/webapp");
+        Context clientContext = tomcat.addWebapp("/app", "../client/src/main/webapp");
 
-        ensureNoBrowserCaching(applicationContext);
-        ensureNoBrowserCaching(staticFilesContext);
+        ((StandardJarScanner) serviceContext.getJarScanner()).setScanAllDirectories(true);
+        ensureNoBrowserCaching(serviceContext);
+        ensureNoBrowserCaching(clientContext);
 
         tomcat.start();
         tomcat.getServer().await();
@@ -75,10 +69,6 @@ public class TomcatServer {
 
     private Options createCommandLineOptions() {
         Options options = new Options();
-        options.addOption("svc", OPTION_SERVICE_BASE_DIR, true,
-                          "Base directory for service web application, defaults to '" + DEFAULT_SERVICE_BASE_DIR + "'");
-        options.addOption("app", OPTION_CLIENT_BASE_DIR, true,
-                          "Base directory for client application, defaults to '" + DEFAULT_CLIENT_BASE_DIR + "'");
         options.addOption("p", OPTION_PORT, true, "Port number used by the server, defaults to " + DEFAULT_PORT);
         options.addOption("h", OPTION_HELP, false, "Display this help text");
         return options;

@@ -1,4 +1,4 @@
-package com.thoughtworks.learnangularjs;
+package com.thoughtworks.learnangularjs.domain;
 
 import com.google.common.base.Preconditions;
 
