@@ -1,4 +1,5 @@
 build
+node_modules
 out
 target
 tmp
@@ -10,4 +11,3 @@ tmp
 *.iws
 *.log
 *.swp
-

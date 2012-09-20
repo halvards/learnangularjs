@@ -69,30 +69,31 @@ dependencies {
             "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
 
     testCompile "junit:junit:${junitVersion}",
-            "org.hamcrest:hamcrest-core:${hamcrestVersion}",
-            "org.hamcrest:hamcrest-library:${hamcrestVersion}",
-            "org.mockito:mockito-core:${mockitoVersion}",
-            "org.springframework:spring-test:${springFrameworkVersion}",
-            "commons-cli:commons-cli:${commonsCliVersion}"
+                "org.hamcrest:hamcrest-core:${hamcrestVersion}",
+                "org.hamcrest:hamcrest-library:${hamcrestVersion}",
+                "org.mockito:mockito-core:${mockitoVersion}",
+                "org.springframework:spring-test:${springFrameworkVersion}",
+                "commons-cli:commons-cli:${commonsCliVersion}"
 
     providedCompile "javax.servlet:javax.servlet-api:${servletApiVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+                    "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+                    "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
+                    "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
 }
 
 task runServiceDaemon(dependsOn: testClasses,
-                      description: 'Runs the service for testing purposes.',
+                      description: 'Runs the service as a daemon for scenario tests in automated build.',
                       group: 'application') << {
     logging.setLevel(LogLevel.INFO)
     def serverTimeoutMillis = 300000
-    ant.parallel(timeout: serverTimeoutMillis, failonany: true) {
+    ant.parallel(timeout: serverTimeoutMillis,
+                 failonany: true) {
         ant.daemons {
             ant.java(classname: 'com.thoughtworks.learnangularjs.server.TomcatServer',
-                    classpath: sourceSets.test.runtimeClasspath.asPath,
-                    fork: true,
-                    failonerror: true,
-                    timeout: serverTimeoutMillis)
+                     classpath: sourceSets.test.runtimeClasspath.asPath,
+                     fork: true,
+                     failonerror: true,
+                     timeout: serverTimeoutMillis)
         }
         ant.waitfor(maxwait: 1, maxwaitunit: 'minute', checkevery: 100, checkeveryunit: 'millisecond') {
             ant.http(url: 'http://127.0.0.1:8000/app/index.html')
@@ -105,7 +106,7 @@ task runService(dependsOn: testClasses,
                 group: 'application') << {
     logging.setLevel(LogLevel.INFO)
     ant.java(classname: 'com.thoughtworks.learnangularjs.server.TomcatServer',
-            classpath: sourceSets.test.runtimeClasspath.asPath,
-            fork: true,
-            failonerror: true)
+             classpath: sourceSets.test.runtimeClasspath.asPath,
+             fork: true,
+             failonerror: true)
 }

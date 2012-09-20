@@ -1,14 +1,20 @@
-apply plugin: 'idea'  // http://www.gradle.org/docs/current/userguide/idea_plugin.html
+apply plugin: 'idea'           // http://www.gradle.org/docs/current/userguide/idea_plugin.html
 
 subprojects {
     apply plugin: 'idea'
-    apply plugin: 'project-report'  // http://gradle.org/docs/current/userguide/project_reports_plugin.html
 }
 
 // Ensure the IWS Workspace file is also deleted (this is not the default)
-task cleanIdea(dependsOn: [cleanIdeaProject, cleanIdeaWorkspace, cleanIdeaModule], type: Delete, overwrite: true) {
-    description = 'Cleans IDEA project files (IML, IPR, IWS)'
-    group = 'IDE'
+task cleanIdea(dependsOn: [cleanIdeaProject, cleanIdeaWorkspace, cleanIdeaModule],
+               type: Delete,
+               overwrite: true,
+               description: 'Cleans IDEA project files (IML, IPR, IWS)',
+               group: 'IDE')
+
+task clean(type: Delete,
+           description: 'Deletes the build directory produced by Gradle and the out directory produced by IntelliJ IDEA.',
+           group: 'build') << {
+    delete 'build', 'out'
 }
 
 // Tell IntelliJ IDEA that the VCS for this project is Git

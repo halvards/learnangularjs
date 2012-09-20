@@ -4,10 +4,10 @@
 
 describe('Todo List App', function () {
 
-    it('should echo task type selection', function () {
+    it('should list task types', function () {
         browser().navigateTo('tasks');
         window.top.console.log("logging works");
         expect(browser().location().url()).toBe('/tasks');
-        pause();
+        expect(element('#task option', 'List of task types').count()).toBe(4);
     });
 });

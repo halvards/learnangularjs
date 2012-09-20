@@ -37,22 +37,23 @@ task test(description: 'Runs the unit tests.',
              fork: true,
              failonerror: true,
              timeout: 60000) {
-        arg(value: '--browser')
-        arg(value: 'phantomjs;support/phantomjs-jstd-bridge.js')
-        arg(value: '--captureConsole')
-        arg(value: 'true')
-        arg(value: '--config')
-        arg(value: 'unit.jstd')
-        arg(value: '--port')
-        arg(value: '9879')
-        arg(value: '--testOutput')
-        arg(value: unitTestReportDir)
-        arg(value: '--tests')
-        arg(value: 'all')
+        ant.arg(value: '--browser')
+        ant.arg(value: 'phantomjs;support/phantomjs-jstd-bridge.js')
+        ant.arg(value: '--captureConsole')
+        ant.arg(value: 'true')
+        ant.arg(value: '--config')
+        ant.arg(value: 'unit.jstd')
+        ant.arg(value: '--port')
+        ant.arg(value: '9879')
+        ant.arg(value: '--testOutput')
+        ant.arg(value: unitTestReportDir)
+        ant.arg(value: '--tests')
+        ant.arg(value: 'all')
     }
 }
 
 task scenariotest(dependsOn: ':service:runServiceDaemon',
+//task scenariotest(dependsOn: ':stubservice:runServiceDaemon',
                   description: 'Runs the scenario tests against the real service.',
                   group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
@@ -65,28 +66,25 @@ task scenariotest(dependsOn: ':service:runServiceDaemon',
              fork: true,
              failonerror: true,
              timeout: 300000) {
-        arg(value: '--browser')
-        arg(value: 'phantomjs;support/phantomjs-jstd-bridge.js')
-        arg(value: '--captureConsole')
-        arg(value: 'true')
-        arg(value: '--config')
-        arg(value: 'e2e.jstd')
-        arg(value: '--port')
-        arg(value: '9880')
-        arg(value: '--testOutput')
-        arg(value: e2eTestReportDir)
-        arg(value: '--tests')
-        arg(value: 'all')
+        ant.arg(value: '--browser')
+        ant.arg(value: 'phantomjs;support/phantomjs-jstd-bridge.js')
+        ant.arg(value: '--captureConsole')
+        ant.arg(value: 'true')
+        ant.arg(value: '--config')
+        ant.arg(value: 'e2e.jstd')
+        ant.arg(value: '--port')
+        ant.arg(value: '9880')
+        ant.arg(value: '--testOutput')
+        ant.arg(value: e2eTestReportDir)
+        ant.arg(value: '--tests')
+        ant.arg(value: 'all')
     }
 }
 
-task jshint(type: SourceTask,
-            overwrite: true,
+task jshint(overwrite: true,
             description: 'Runs JSHint on the main source files.',
             group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
-    def jsHintReportFile = "${buildDir}/jshint-report.xml"
-    outputs.file jsHintReportFile
     println '-------------------------------------------'
     println ' J S  H I N T                              '
     println '-------------------------------------------'
@@ -94,9 +92,9 @@ task jshint(type: SourceTask,
     ant.jshint(dir: 'src/main/webapp/js',
                globals: 'jQuery=true, $=true, angular=true',
                optionsFile: "${projectDir}/support/jshint-options.properties") {
-        include(name: 'app/**/*.js')
-        exclude(name: 'lib/**/*.js')
-        report(type: 'xml', destFile: jsHintReportFile)
+        ant.include(name: 'app/**/*.js')
+        ant.exclude(name: 'lib/**/*.js')
+        ant.report(type: 'xml', destFile: "${buildDir}/jshint-report.xml")
     }
 }
 

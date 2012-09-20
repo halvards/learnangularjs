@@ -17,6 +17,8 @@ public class TasksController {
     @RequestMapping(value = "/tasktypes.json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<TaskType> getTaskTypes() {
-        return ImmutableList.of(new TaskType("Feed the dog"), new TaskType("Start the server"));
+        return ImmutableList.of(new TaskType("This is served from the Java service"),
+                                new TaskType("Start the server"),
+                                new TaskType("Set the alarm clock"));
     }
 }

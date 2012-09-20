@@ -1,0 +1,40 @@
+// Ensure this subproject becomes an IntelliJ IDEA Web Module rather than a Java Module
+idea.module.iml {
+    withXml { module ->
+        module.node.@type = 'WEB_MODULE'
+        module.node.component.orderEntry.find { it.@type == 'inheritedJdk' }.replaceNode {}
+    }
+}
+
+task clean(type: Delete,
+           description: 'Deletes the build directory.',
+           group: 'build') << {
+    delete 'build'
+}
+
+task runServiceDaemon(description: 'Runs the STUB service as a daemon for scenario tests in automated build.',
+                      group: 'application') << {
+    logging.setLevel(LogLevel.INFO)
+    def serverTimeoutMillis = 300000
+    ant.parallel(timeout: serverTimeoutMillis, failonany: true) {
+        ant.daemons {
+            ant.exec(executable: 'node',
+                     failonerror: true,
+                     timeout: serverTimeoutMillis) {
+                ant.arg(value: 'stubservice.js')
+            }
+        }
+        ant.waitfor(maxwait: 1, maxwaitunit: 'minute', checkevery: 100, checkeveryunit: 'millisecond') {
+            ant.http(url: 'http://127.0.0.1:8000/app/index.html')
+        }
+    }
+}
+
+task runService(description: 'Starts up the STUB service using NodeJS.',
+                group: 'application') << {
+    logging.setLevel(LogLevel.INFO)
+    ant.exec(executable: 'node',
+             failonerror: true) {
+        ant.arg(value: 'stubservice.js')
+    }
+}
