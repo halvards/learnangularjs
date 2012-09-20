@@ -35,7 +35,11 @@ If needed, set the Gradle home directory IDEA setting to /usr/local/Cellar/gradl
 
 # Gradle Tasks
 
-To see all available tasks, including their dependencies, run:
+To see all available tasks, run:
+
+    gradle tasks
+
+To also see all task dependencies, run:
 
     gradle tasks --all
 
