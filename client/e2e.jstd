@@ -6,9 +6,10 @@ load:
 test:
   - src/test/webapp/js/e2e/*-scenario.js
 
+# Important: ensure there is no trailing slash on the server property
 proxy:
   - matcher: "*"
-    server: "http://localhost:8000/app"
+    server: "http://localhost:8000"
 
 plugin:
   - name: "testisolation"

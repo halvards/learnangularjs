@@ -5,8 +5,9 @@
 describe('Todo List App', function () {
 
     it('should echo task type selection', function () {
-        browser().navigateTo('/index.html#/tasks');
+        browser().navigateTo('tasks');
         window.top.console.log("logging works");
         expect(browser().location().url()).toBe('/tasks');
+        pause();
     });
 });

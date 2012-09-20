@@ -18,7 +18,7 @@ apply plugin: 'maven'      // http://www.gradle.org/docs/current/userguide/maven
 apply plugin: 'war'        // http://www.gradle.org/docs/current/userguide/war_plugin.html
 
 repositories {
-    mavenLocal()
+//    mavenLocal()  // This option fetches dependencies from your local .m2 directory if present, but it spams the output
     mavenCentral()
 }
 
