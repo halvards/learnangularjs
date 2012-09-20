@@ -1,3 +1,16 @@
+def version = '1.0'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.eriwen:gradle-js-plugin:1.1'
+    }
+}
+
+apply plugin: 'js'
+
 // Ensure this subproject becomes an IntelliJ IDEA Web Module rather than a Java Module
 idea.module.iml {
     withXml { module ->
@@ -6,11 +19,14 @@ idea.module.iml {
     }
 }
 
-task clean(type: Delete) {
+task clean(type: Delete,
+           description: 'Deletes the build directory.',
+           group: 'build') << {
     delete 'build'
 }
 
-task test << {
+task test(description: 'Runs the unit tests.',
+          group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     def unitTestReportDir = "${buildDir}/jstd-unit-reports"
     mkdir unitTestReportDir  // must be created before jstd is run
@@ -36,7 +52,9 @@ task test << {
     }
 }
 
-task scenariotest(dependsOn: ':service:startserver') << {
+task scenariotest(dependsOn: ':service:runServiceDaemon',
+                  description: 'Runs the scenario tests against the real service.',
+                  group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     def e2eTestReportDir = "${buildDir}/jstd-e2e-reports"
     mkdir e2eTestReportDir  // must be created before jstd is run
@@ -62,7 +80,10 @@ task scenariotest(dependsOn: ':service:startserver') << {
     }
 }
 
-task jshint << {
+task jshint(type: SourceTask,
+            overwrite: true,
+            description: 'Runs JSHint on the main source files.',
+            group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     def jsHintReportFile = "${buildDir}/jshint-report.xml"
     outputs.file jsHintReportFile
@@ -79,3 +100,6 @@ task jshint << {
     }
 }
 
+task check(dependsOn: [jshint, test, scenariotest],
+           description: 'Runs all checks.',
+           group: 'verification')

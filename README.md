@@ -27,6 +27,7 @@ Ensure you have the following IDEA plugins:
 
 * AngularJS
 * Gradle (bundled)
+* NodeJS
 * JSTestDriver
 * All the bundled JavaScript plugins
 
@@ -34,9 +35,9 @@ If needed, set the Gradle home directory IDEA setting to /usr/local/Cellar/gradl
 
 # Gradle Tasks
 
-To see all available tasks, run:
+To see all available tasks, including their dependencies, run:
 
-    gradle tasks
+    gradle tasks --all
 
 # Suggested Reading (and Watching)
 

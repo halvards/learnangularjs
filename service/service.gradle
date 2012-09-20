@@ -1,12 +1,24 @@
 def version = '1.0'
 
-apply plugin: 'war'
-
-idea.module {
-    downloadSources = true
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "net.saliman:gradle-cobertura-plugin:1.0.1"
+    }
 }
 
+apply plugin: 'checkstyle' // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.CheckstyleExtension.html
+apply plugin: 'cobertura'  // https://github.com/stevesaliman/gradle-cobertura-plugin
+apply plugin: 'findbugs'   // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html
+apply plugin: 'java'       // http://www.gradle.org/docs/current/userguide/java_plugin.html
+apply plugin: 'jdepend'    // http://gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.JDependExtension.html
+apply plugin: 'maven'      // http://www.gradle.org/docs/current/userguide/maven_plugin.html
+apply plugin: 'war'        // http://www.gradle.org/docs/current/userguide/war_plugin.html
+
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -15,9 +27,10 @@ configurations {
     all {
         exclude(group: 'commons-logging')
     }
+}
 
-    // Stop IntelliJ IDEA from complaining about missing Ivy classes
-    gradleIdea
+idea.module {
+    downloadSources = true
 }
 
 jar.manifest {
@@ -66,11 +79,11 @@ dependencies {
             "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
-
-    gradleIdea "org.apache.ivy:ivy:2.2.0"
 }
 
-task startserver(dependsOn: testClasses) << {
+task runServiceDaemon(dependsOn: testClasses,
+                      description: 'Runs the service for testing purposes.',
+                      group: 'application') << {
     logging.setLevel(LogLevel.INFO)
     def serverTimeoutMillis = 300000
     ant.parallel(timeout: serverTimeoutMillis, failonany: true) {
@@ -87,11 +100,12 @@ task startserver(dependsOn: testClasses) << {
     }
 }
 
-task runService(dependsOn: testClasses) << {
+task runService(dependsOn: testClasses,
+                description: 'Starts up the service using Tomcat.',
+                group: 'application') << {
     logging.setLevel(LogLevel.INFO)
     ant.java(classname: 'com.thoughtworks.learnangularjs.server.TomcatServer',
             classpath: sourceSets.test.runtimeClasspath.asPath,
             fork: true,
             failonerror: true)
 }
-
