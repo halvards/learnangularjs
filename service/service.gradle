@@ -37,6 +37,18 @@ jar.manifest {
     attributes("Implementation-Title": "Learn AngularJS", "Implementation-Version": version)
 }
 
+// Add to the end of the existing processResources task from the Gradle Java plugin
+// http://gradle.org/docs/current/userguide/tutorial_using_tasks.html#N102B2
+processResources << {
+    // Workaround for Tomcat. Tomcat requires META-INF to be a non-empty subdirectory of
+    // build/classes/main in order for Servlet 3.0 Application Initializer scanning to work
+    copy {
+        // http://gradle.org/docs/current/userguide/working_with_files.html
+        from "src/main/resources/META-INF/dummy-file-required-by-tomcat.txt"
+        into "${sourceSets.main.output.classesDir}/META-INF"
+    }
+}
+
 dependencies {
     def cglibVersion = '2.2.2'
     def commonsLangVersion = '2.6'
@@ -106,7 +118,15 @@ task runService(dependsOn: testClasses,
                 group: 'application') << {
     logging.setLevel(LogLevel.INFO)
     ant.java(classname: 'com.thoughtworks.learnangularjs.server.TomcatServer',
-             classpath: sourceSets.test.runtimeClasspath.asPath,
+//             classpath: sourceSets.test.runtimeClasspath.asPath,
              fork: true,
-             failonerror: true)
+             failonerror: true) {
+//        classpath(path: sourceSets.test.runtimeClasspath.asPath)
+//        classpath(path: sourceSets.main.output.asPath)
+        classpath {
+            pathelement(path: sourceSets.test.runtimeClasspath.asPath)
+            pathelement(path: sourceSets.main.runtimeClasspath.asPath)
+            pathelement(location: "build/resources/main")
+        }
+    }
 }
