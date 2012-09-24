@@ -22,10 +22,21 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    integrationTest {
+        java.srcDir file('src/integration-test/java')
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
+
 configurations {
     all {
         exclude(group: 'commons-logging') // Never include commons-logging (use SLF4J instead)
     }
+
+    // integration tests can use classes and resources from test sourceSet
+    integrationTestCompile { extendsFrom testCompile }
+    integrationTestRuntime { extendsFrom integrationTestCompile, testRuntime }
 }
 
 idea.module {
@@ -91,6 +102,16 @@ dependencies {
                     "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
                     "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
 }
+
+task integrationTest(type: Test,
+                     dependsOn: testClasses,
+                     description: 'Runs the integration tests.',
+                     group: 'verification') {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+
+check.dependsOn integrationTest
 
 task runServiceDaemon(dependsOn: testClasses,
                       description: 'Runs the service as a daemon for scenario tests in automated build.',
