@@ -1,4 +1,4 @@
-def version = '1.0'
+def version = '1.0.0'
 
 buildscript {
     repositories {
@@ -52,11 +52,7 @@ task test(description: 'Runs the unit tests.',
     }
 }
 
-task scenariotest(dependsOn: ':service:runServiceDaemon',
-//task scenariotest(dependsOn: ':stubservice:runServiceDaemon',
-                  description: 'Runs the scenario tests against the real service.',
-                  group: 'verification') << {
-    logging.setLevel(LogLevel.INFO)
+def executeScenarioTests() {
     def e2eTestReportDir = "${buildDir}/jstd-e2e-reports"
     mkdir e2eTestReportDir  // must be created before jstd is run
     println '-------------------------------------------'
@@ -79,6 +75,20 @@ task scenariotest(dependsOn: ':service:runServiceDaemon',
         ant.arg(value: '--tests')
         ant.arg(value: 'all')
     }
+}
+
+task scenariotest(dependsOn: ':service:runServiceDaemon',
+                  description: 'Runs the scenario tests against the real service.',
+                  group: 'verification') << {
+    logging.setLevel(LogLevel.INFO)
+    executeScenarioTests()
+}
+
+task scenarioteststub(dependsOn: ':stubservice:runServiceDaemon',
+                      description: 'Runs the scenario tests against the stub service.',
+                      group: 'verification') << {
+    logging.setLevel(LogLevel.INFO)
+    executeScenarioTests()
 }
 
 task jshint(overwrite: true,
