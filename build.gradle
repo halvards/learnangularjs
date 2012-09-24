@@ -72,15 +72,15 @@ def e2eTestRunConfiguration = '''
     </configuration>
 '''
 
-def serviceTestRunConfiguration = '''
-    <configuration default="false" name="Service Tests" type="JUnit" factoryName="JUnit">
+def serviceUnitTestRunConfiguration = '''
+    <configuration default="false" name="Service Unit Tests" type="JUnit" factoryName="JUnit">
       <module name="service" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="TEST_OBJECT" value="directory" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/service" />
@@ -90,6 +90,34 @@ def serviceTestRunConfiguration = '''
         <value defaultName="moduleWithDependencies" />
       </option>
       <envs />
+      <dir value="$PROJECT_DIR$/service/src/test/java" />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+'''
+
+def serviceIntegrationTestRunConfiguration = '''
+    <configuration default="false" name="Service Integration Tests" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" runner="idea" />
+      <module name="service" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/service" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <dir value="$PROJECT_DIR$/service/src/integration-test/java" />
       <patterns />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
@@ -105,6 +133,7 @@ idea.workspace.iws {
         runManagerComponentNode.append(new XmlParser().parseText(startStubServiceRunConfiguration))
         runManagerComponentNode.append(new XmlParser().parseText(clientUnitTestRunConfiguration))
         runManagerComponentNode.append(new XmlParser().parseText(e2eTestRunConfiguration))
-        runManagerComponentNode.append(new XmlParser().parseText(serviceTestRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(serviceUnitTestRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(serviceIntegrationTestRunConfiguration))
     }
 }
