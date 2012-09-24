@@ -76,14 +76,14 @@ def executeScenarioTests() {
     }
 }
 
-task scenariotest(dependsOn: ':service:runServiceDaemon',
+task scenarioTest(dependsOn: ':service:runServiceDaemon',
                   description: 'Runs the scenario tests against the real service.',
                   group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     executeScenarioTests()
 }
 
-task scenarioteststub(dependsOn: ':stubservice:runServiceDaemon',
+task scenarioTestStub(dependsOn: ':stubservice:runServiceDaemon',
                       description: 'Runs the scenario tests against the stub service.',
                       group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
@@ -107,6 +107,10 @@ task jshint(overwrite: true,
     }
 }
 
-task check(dependsOn: [jshint, test, scenariotest],
+task check(dependsOn: [jshint, test, scenarioTest],
            description: 'Runs all checks.',
            group: 'verification')
+
+task checkStub(dependsOn: [jshint, test, scenarioTestStub],
+               description: 'Runs all checks with stub service.',
+               group: 'verification')
