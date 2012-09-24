@@ -6,10 +6,9 @@ idea.module.iml {
     }
 }
 
-task clean(type: Delete,
-           description: 'Deletes the build directory.',
+task clean(description: 'Deletes the build directory.',
            group: 'build') << {
-    delete 'build'
+    delete "${buildDir}"
 }
 
 task runServiceDaemon(description: 'Runs the STUB service as a daemon for scenario tests in automated build.',

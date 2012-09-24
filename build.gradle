@@ -11,10 +11,9 @@ task cleanIdea(dependsOn: [cleanIdeaProject, cleanIdeaWorkspace, cleanIdeaModule
                description: 'Cleans IDEA project files (IML, IPR, IWS)',
                group: 'IDE')
 
-task clean(type: Delete,
-           description: 'Deletes the build directory produced by Gradle and the out directory produced by IntelliJ IDEA.',
+task clean(description: 'Deletes the build directory produced by Gradle and the out directory produced by IntelliJ IDEA.',
            group: 'build') << {
-    delete 'build', 'out'
+    delete "${buildDir}", 'out'
 }
 
 // Tell IntelliJ IDEA that the VCS for this project is Git
@@ -24,8 +23,8 @@ idea.project.ipr {
     }
 }
 
-def startServerRunConfiguration = '''
-    <configuration default="false" name="Run Server" type="Application" factoryName="Application">
+def startServiceRunConfiguration = '''
+    <configuration default="false" name="Run Service" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.thoughtworks.learnangularjs.server.TomcatServer" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -39,6 +38,14 @@ def startServerRunConfiguration = '''
       <envs />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+'''
+
+def startStubServiceRunConfiguration = '''
+    <configuration default="false" name="Run Stub Service" type="NodeJSConfigurationType" factoryName="Node JS" path-to-node="/usr/local/bin/node" path-to-js-file="stubservice.js" working-dir="$PROJECT_DIR$/stubservice">
+      <RunnerSettings RunnerId="NodeJS.run" />
+      <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
 '''
@@ -94,7 +101,8 @@ idea.workspace.iws {
     withXml { workspace ->
         // Add run configurations
         def runManagerComponentNode = workspace.node.component.find { it.@name == 'RunManager' }
-        runManagerComponentNode.append(new XmlParser().parseText(startServerRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(startServiceRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(startStubServiceRunConfiguration))
         runManagerComponentNode.append(new XmlParser().parseText(clientUnitTestRunConfiguration))
         runManagerComponentNode.append(new XmlParser().parseText(e2eTestRunConfiguration))
         runManagerComponentNode.append(new XmlParser().parseText(serviceTestRunConfiguration))

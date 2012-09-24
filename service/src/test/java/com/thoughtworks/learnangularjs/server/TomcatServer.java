@@ -1,8 +1,11 @@
 package com.thoughtworks.learnangularjs.server;
 
 import org.apache.catalina.Context;
+import org.apache.catalina.Realm;
 import org.apache.catalina.deploy.FilterDef;
 import org.apache.catalina.deploy.FilterMap;
+import org.apache.catalina.filters.ExpiresFilter;
+import org.apache.catalina.realm.MemoryRealm;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.commons.cli.*;
 import org.apache.tomcat.util.scan.StandardJarScanner;
@@ -23,15 +26,25 @@ public class TomcatServer {
         tomcat.setBaseDir(System.getProperty("java.io.tmpdir"));
         tomcat.getHost().setAppBase(System.getProperty("user.dir"));
 
-        Context serviceContext = tomcat.addWebapp("/service", "src/main/webapp");
-        Context clientContext = tomcat.addWebapp("/app", "../client/src/main/webapp");
+        createRealm(tomcat);
 
+        Context serviceContext = tomcat.addWebapp("/service", "src/main/webapp");
         ((StandardJarScanner) serviceContext.getJarScanner()).setScanAllDirectories(true);
         ensureNoBrowserCaching(serviceContext);
+
+        Context clientContext = tomcat.addWebapp("/app", "../client/src/main/webapp");
         ensureNoBrowserCaching(clientContext);
 
         tomcat.start();
         tomcat.getServer().await();
+    }
+
+    private void createRealm(Tomcat tomcat) {
+        MemoryRealm realm = new MemoryRealm();
+        realm.setPathname(System.getProperty("user.dir") + "/src/test/resources/tomcat-users.xml");
+        tomcat.getEngine().setRealm(realm);
+//        tomcat.getHost().setRealm(realm);
+//        serviceContext.setRealm(realm);
     }
 
     private void ensureNoBrowserCaching(Context context) {
@@ -40,18 +53,18 @@ public class TomcatServer {
     }
 
     private FilterMap createNoCacheFilterMapping() {
-        FilterMap filterMapping = new FilterMap();
-        filterMapping.setFilterName("nocache");
-        filterMapping.addURLPattern("/*");
-        return filterMapping;
+        FilterMap expiresFilterMapping = new FilterMap();
+        expiresFilterMapping.setFilterName("expires");
+        expiresFilterMapping.addURLPattern("/*");
+        return expiresFilterMapping;
     }
 
     private FilterDef createNoCacheFilter() {
-        FilterDef filterDefinition = new FilterDef();
-        filterDefinition.setFilterName("nocache");
-        filterDefinition.setFilterClass("org.apache.catalina.filters.ExpiresFilter");
-        filterDefinition.addInitParameter("ExpiresDefault", "access plus 0 seconds");
-        return filterDefinition;
+        FilterDef expiresFilterDefinition = new FilterDef();
+        expiresFilterDefinition.setFilterName("expires");
+        expiresFilterDefinition.setFilterClass(ExpiresFilter.class.getName());
+        expiresFilterDefinition.addInitParameter("ExpiresDefault", "access plus 0 seconds");
+        return expiresFilterDefinition;
     }
 
     private CommandLine parseCommandLine(String[] args) throws ParseException {
