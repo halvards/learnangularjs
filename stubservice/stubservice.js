@@ -5,7 +5,7 @@ var app = express();
 app.use('/app', express.static('../client/src/main/webapp'));
 
 // Serve static files for simple stubbing
-app.use('/service/public', express.static('static'));
+app.use('/service/public', express.static('public'));
 
 // Hello World
 app.get('/hello', function (request, response) {

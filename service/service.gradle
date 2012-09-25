@@ -90,6 +90,7 @@ dependencies {
             "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
             "org.springframework.security:spring-security-config:${springSecurityVersion}",
             "org.springframework.security:spring-security-web:${springSecurityVersion}",
+            "javax.annotation:jsr250-api:${jsr250ApiVersion}",
             "com.google.guava:guava:${guavaVersion}",
             "commons-lang:commons-lang:${commonsLangVersion}",
             "joda-time:joda-time:${jodaTimeVersion}",

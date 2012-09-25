@@ -16,6 +16,7 @@ import java.util.Set;
 /**
  * https://github.com/kolorobot/spring-mvc-quickstart-archetype/blob/master/src/main/resources/archetype-resources/src/main/java/config/WebAppInitializer.java
  */
+@SuppressWarnings("unused")
 public class ApplicationInitializer implements WebApplicationInitializer {
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationInitializer.class);
 
@@ -27,22 +28,23 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servletContext.setInitParameter("defaultXmlEscape", "true");
 
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(RootConfig.class, SecurityConfig.class);
+        rootContext.register(ApplicationConfig.class, SecurityConfig.class);
         servletContext.addListener(new ContextLoaderListener(rootContext));
 
         servletContext.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"))
                 .addMappingForUrlPatterns(null, false, "/*");
 
-        addDispatcherServlet(servletContext, PublicWebConfig.class, "public");
-        addDispatcherServlet(servletContext, SecureWebConfig.class, "secure");
+        addDispatcherServlet(servletContext, PublicWebConfig.class, "/public/*");
+        addDispatcherServlet(servletContext, SecureWebConfig.class, "/secure/*");
     }
 
-    private void addDispatcherServlet(ServletContext servletContext, Class applicationContextClass, String contextPath) {
+    private void addDispatcherServlet(ServletContext servletContext, Class applicationContextClass, String urlPattern) {
         AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
         webContext.register(applicationContextClass);
-        ServletRegistration.Dynamic dispatcherServlet = servletContext.addServlet(contextPath + "DispatcherServlet", new DispatcherServlet(webContext));
+        ServletRegistration.Dynamic dispatcherServlet = servletContext
+                .addServlet(urlPattern.replaceAll("\\W", "") + "DispatcherServlet", new DispatcherServlet(webContext));
         dispatcherServlet.setLoadOnStartup(1);
-        Set<String> mappingConflicts = dispatcherServlet.addMapping("/" + contextPath + "/*");
+        Set<String> mappingConflicts = dispatcherServlet.addMapping(urlPattern);
         if (!mappingConflicts.isEmpty()) {
             throw new IllegalStateException("Servlets cannot be mapped to '/' under Tomcat. Use '/*' instead.");
         }

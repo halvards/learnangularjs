@@ -1,7 +1,6 @@
 package com.thoughtworks.learnangularjs.web.secure;
 
 import com.thoughtworks.learnangularjs.domain.Greeting;
-import org.springframework.context.annotation.Role;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/helloworld")
 public class HelloWorldJsonController {
 
+    @Secured({"ROLE_USER"})
     @RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Greeting getAccount(@PathVariable String name) {
