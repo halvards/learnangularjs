@@ -5,11 +5,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
                            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
+    <security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
 
     <security:http create-session="never" use-expressions="true" auto-config="false"
                    entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
         <security:logout logout-success-url="/login/logout.html" logout-url="/logout"/>
+        <!-- Of the rules below, the first one to fire is used -->
+        <security:intercept-url pattern="/login/**" access="permitAll"/>
+        <security:intercept-url pattern="/secure/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/public/**" access="permitAll"/>
+        <security:intercept-url pattern="/**" access="denyAll"/>
         <security:custom-filter position="PRE_AUTH_FILTER" ref="preAuthenticatedProcessingFilter"/>
         <!-- The following line is required for Tomcat, otherwise it will prompt for username / password twice -->
         <security:session-management session-fixation-protection="none"/>

@@ -31,7 +31,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servletContext.addListener(new ContextLoaderListener(rootContext));
 
         servletContext.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"))
-                .addMappingForUrlPatterns(null, false, "/secure/*");
+                .addMappingForUrlPatterns(null, false, "/*");
 
         addDispatcherServlet(servletContext, PublicWebConfig.class, "public");
         addDispatcherServlet(servletContext, SecureWebConfig.class, "secure");

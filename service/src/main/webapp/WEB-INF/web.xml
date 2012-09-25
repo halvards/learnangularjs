@@ -9,13 +9,13 @@
     <description>JSON/HTTP service for task list application.</description>
 
     <security-constraint>
+        <display-name>Secure Content</display-name>
         <web-resource-collection>
-            <web-resource-name>Secure Content</web-resource-name>
+            <web-resource-name>Secure</web-resource-name>
             <url-pattern>/secure/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>ROLE_USER</role-name>
-            <role-name>ROLE_ADMIN</role-name>
+            <role-name>*</role-name>
         </auth-constraint>
     </security-constraint>
 
