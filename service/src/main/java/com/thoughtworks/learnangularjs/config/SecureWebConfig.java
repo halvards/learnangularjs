@@ -6,6 +6,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.thoughtworks.learnangularjs.web"})
-public class WebConfig {
+@ComponentScan(basePackages = {"com.thoughtworks.learnangularjs.web.secure"})
+public class SecureWebConfig {
 }

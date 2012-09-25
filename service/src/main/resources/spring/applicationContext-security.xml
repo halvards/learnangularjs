@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
+
+    <security:http create-session="never" use-expressions="true" auto-config="false"
+                   entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
+        <security:logout logout-success-url="/login/logout.html" logout-url="/logout"/>
+        <security:custom-filter position="PRE_AUTH_FILTER" ref="preAuthenticatedProcessingFilter"/>
+        <!-- The following line is required for Tomcat, otherwise it will prompt for username / password twice -->
+        <security:session-management session-fixation-protection="none"/>
+    </security:http>
+
+    <bean id="preAuthenticatedProcessingFilterEntryPoint"
+          class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+
+    <bean id="preAuthenticatedProcessingFilter"
+          class="org.springframework.security.web.authentication.preauth.j2ee.J2eePreAuthenticatedProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationDetailsSource">
+            <bean class="org.springframework.security.web.authentication.preauth.j2ee.J2eeBasedPreAuthenticatedWebAuthenticationDetailsSource">
+                <property name="mappableRolesRetriever">
+                    <bean class="org.springframework.security.web.authentication.preauth.j2ee.WebXmlMappableAttributesRetriever"/>
+                </property>
+                <property name="userRoles2GrantedAuthoritiesMapper">
+                    <bean class="org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper">
+                        <property name="attributePrefix" value=""/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider ref="preAuthenticatedAuthenticationProvider"/>
+    </security:authentication-manager>
+
+    <bean id="preAuthenticatedAuthenticationProvider"
+          class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+        <property name="preAuthenticatedUserDetailsService">
+            <bean class="org.springframework.security.web.authentication.preauth.PreAuthenticatedGrantedAuthoritiesUserDetailsService"/>
+        </property>
+    </bean>
+
+</beans>

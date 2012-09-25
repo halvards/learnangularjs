@@ -1,4 +1,4 @@
-package com.thoughtworks.learnangularjs.web;
+package com.thoughtworks.learnangularjs.web.nonsecure;
 
 import com.google.common.collect.ImmutableList;
 import com.thoughtworks.learnangularjs.domain.TaskType;

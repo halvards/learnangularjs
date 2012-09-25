@@ -26,7 +26,7 @@ public class TomcatServer {
         tomcat.setBaseDir(System.getProperty("java.io.tmpdir"));
         tomcat.getHost().setAppBase(System.getProperty("user.dir"));
 
-        createRealm(tomcat);
+        tomcat.getHost().setRealm(createRealm());
 
         Context serviceContext = tomcat.addWebapp("/service", "src/main/webapp");
         ((StandardJarScanner) serviceContext.getJarScanner()).setScanAllDirectories(true);
@@ -39,12 +39,10 @@ public class TomcatServer {
         tomcat.getServer().await();
     }
 
-    private void createRealm(Tomcat tomcat) {
+    private Realm createRealm() {
         MemoryRealm realm = new MemoryRealm();
         realm.setPathname(System.getProperty("user.dir") + "/src/test/resources/tomcat-users.xml");
-        tomcat.getEngine().setRealm(realm);
-//        tomcat.getHost().setRealm(realm);
-//        serviceContext.setRealm(realm);
+        return realm;
     }
 
     private void ensureNoBrowserCaching(Context context) {

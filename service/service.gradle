@@ -73,6 +73,7 @@ dependencies {
     def guavaVersion = '13.0.1'
     def jacksonVersion = '2.0.6'
     def jodaTimeVersion = '2.1'
+    def jsr250ApiVersion = '1.0'
     def slf4jVersion = '1.7.0'
     def springFrameworkVersion = '3.1.2.RELEASE'
     def springSecurityVersion = '3.1.2.RELEASE'
@@ -82,7 +83,6 @@ dependencies {
     def junitVersion = '4.10'
     def mockitoVersion = '1.9.0'
 
-    def servletApiVersion = '3.0.1'
     def tomcatVersion = '7.0.30'
 
     compile "org.springframework:spring-webmvc:${springFrameworkVersion}",
@@ -105,8 +105,7 @@ dependencies {
                 "org.springframework:spring-test:${springFrameworkVersion}",
                 "commons-cli:commons-cli:${commonsCliVersion}"
 
-    providedCompile "javax.servlet:javax.servlet-api:${servletApiVersion}",
-                    "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+    providedCompile "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
                     "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
                     "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
 }

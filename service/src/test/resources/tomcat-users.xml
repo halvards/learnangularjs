@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tomcat-users>
-  <role rolename="publicrole"/>
-  <role rolename="internalrole"/>
-  <role rolename="adminrole"/>
-  <user username="public" password="public" roles="adminrole"/>
-  <user username="internal" password="internal" roles="internalrole"/>
-  <user username="public" password="public" roles="publicrole"/>
+    <role rolename="ROLE_USER"/>
+    <role rolename="ROLE_ADMIN"/>
+    <user username="public" password="public"/>
+    <user username="user" password="user" roles="ROLE_USER"/>
+    <user username="admin" password="admin" roles="ROLE_ADMIN"/>
 </tomcat-users>

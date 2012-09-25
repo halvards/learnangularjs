@@ -5,14 +5,35 @@
          version="3.0"
          metadata-complete="true">
 
-    <!--<filter>-->
-        <!--<filter-name>springSecurityFilterChain</filter-name>-->
-        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
-    <!--</filter>-->
+    <display-name>Task List Service</display-name>
+    <description>JSON/HTTP service for task list application.</description>
 
-    <!--<filter-mapping>-->
-        <!--<filter-name>springSecurityFilterChain</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Secure Content</web-resource-name>
+            <url-pattern>/secure/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ROLE_USER</role-name>
+            <role-name>ROLE_ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>DEFAULT</realm-name>
+        <form-login-config>
+            <form-login-page>/login/login.html</form-login-page>
+            <form-error-page>/login/login-failed.html</form-error-page>
+        </form-login-config>
+    </login-config>
+
+    <!-- The following roles must match those in tomcat-users.xml -->
+    <security-role>
+        <role-name>ROLE_USER</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ROLE_ADMIN</role-name>
+    </security-role>
 
 </web-app>
