@@ -1,5 +1,3 @@
-// How to use Passport: https://github.com/jaredhanson/passport-local/blob/master/examples/login/app.js
-
 var express = require('express')
     , authenticate = require('./authenticate');
 
@@ -10,7 +8,7 @@ app.configure(function () {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.session({ secret:'keyboard cat' }));
-    authenticate.configure(app); // this must appear _before_ app.use(app.router)
+    authenticate.configure(app);  // this must appear _before_ app.use(app.router)
     app.use(app.router);
 
     // Serve up the client JS application

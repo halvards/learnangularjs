@@ -1,7 +1,10 @@
 'use strict';
 
-angular.module('taskListApp', ['tasksService']).
-    config(['$routeProvider', function($routeProvider) {
+
+angular.module('taskListApp', ['tasksService', 'httpInterceptors']).
+    config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
-        when('/tasks', {templateUrl: 'partials/tasks.html'});
+        when('/tasks', {templateUrl:'partials/tasks.html'});
+}]).config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.responseInterceptors.push('loginInterceptor');
 }]);
