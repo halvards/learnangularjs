@@ -6,10 +6,8 @@
         "start":"node stubservice"
     },
     "dependencies":{
-        "connect-flash": "0.1.0",
         "express":"3.0.x",
         "passport":"0.1.12",
-        "passport-local":"0.1.6",
-        "util":"0.4.9"
+        "passport-local":"0.1.6"
     }
 }
