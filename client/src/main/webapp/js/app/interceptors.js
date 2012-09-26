@@ -17,7 +17,6 @@ angular.module('httpInterceptors', ['ng']).
             return promise.then(
                 function success(response) {
                     $log.info(getResponseSummary(response));
-                    $log.info(response);
                     return response;
                 }, function error(response) {
                     $log.error(getResponseSummary(response));
