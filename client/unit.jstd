@@ -1,9 +1,10 @@
 load:
   - src/test/webapp/js/lib/unit/jasmine.js
   - src/test/webapp/js/lib/unit/JasmineAdapter.js
-  - src/main/webapp/js/lib/angular.js
-  - src/main/webapp/js/lib/angular-resource.js
+  - src/main/webapp/js/lib/angular/angular.js
+  - src/main/webapp/js/lib/angular/angular-resource.js
   - src/test/webapp/js/lib/unit/angular-mocks.js
+  - src/main/webapp/js/lib/jquery/jquery.js
   - src/main/webapp/js/app/*.js
 
 test:

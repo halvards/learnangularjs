@@ -43,7 +43,8 @@ sourceSets {
 
 configurations {
     all {
-        exclude(group: 'commons-logging') // Never include commons-logging (use SLF4J instead)
+        exclude(group: 'commons-logging')  // Never include commons-logging (use SLF4J instead)
+        exclude(group: 'log4j')  // Never include log4j (use SLF4J instead)
     }
 
     // use these configurations to specify dependencies only used by integration tests (and not by unit tests)
@@ -75,6 +76,7 @@ dependencies {
     def jodaTimeVersion = '2.1'
     def jsr250ApiVersion = '1.0'
     def slf4jVersion = '1.7.0'
+    def logbackVersion = '1.0.7'
     def springFrameworkVersion = '3.1.2.RELEASE'
     def springSecurityVersion = '3.1.2.RELEASE'
 
@@ -94,6 +96,7 @@ dependencies {
             "com.google.guava:guava:${guavaVersion}",
             "commons-lang:commons-lang:${commonsLangVersion}",
             "joda-time:joda-time:${jodaTimeVersion}",
+//            "ch.qos.logback:logback-classic:${logbackVersion}",
             "org.slf4j:slf4j-simple:${slf4jVersion}",
             "org.slf4j:slf4j-api:${slf4jVersion}",
             "org.slf4j:log4j-over-slf4j:${slf4jVersion}",
@@ -108,7 +111,7 @@ dependencies {
 
     providedCompile "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
                     "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
-                    "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+                    "org.apache.tomcat.embed:tomcat-embed-logging-log4j:${tomcatVersion}"
 }
 
 task integrationTest(type: Test,
@@ -150,3 +153,4 @@ task runService(dependsOn: testClasses,
              fork: true,
              failonerror: true)
 }
+

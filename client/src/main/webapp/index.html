@@ -1,16 +1,23 @@
 <!doctype html>
-<html ng-app="taskListApp">
+<html lang="en" ng-app="bookstoreApp" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
-    <title>Task List</title>
-    <script src="js/lib/angular.js"></script>
-    <script src="js/lib/angular-resource.js"></script>
+    <title>Book Store</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="js/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="js/lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <script src="js/lib/angular/angular.js"></script>
+    <script src="js/lib/angular/angular-resource.js"></script>
+    <script src="js/lib/jquery/jquery.js"></script>
+    <script src="js/lib/bootstrap/js/bootstrap.js"></script>
     <script src="js/app/app.js"></script>
     <script src="js/app/controllers.js"></script>
     <script src="js/app/interceptors.js"></script>
     <script src="js/app/services.js"></script>
 </head>
 <body>
-<div ng-view></div>
+<div class="container" ng-view></div>
 </body>
 </html>

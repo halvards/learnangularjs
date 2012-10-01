@@ -1,5 +1,9 @@
 'use strict';
 
-function TasksController($scope, Tasks) {
-    $scope.tasks = Tasks.query();
+function ItemsController($scope, Novels) {
+    $scope.novels = Novels.query();
+}
+
+function ErrorController($scope) {
+
 }

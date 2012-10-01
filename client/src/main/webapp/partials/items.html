@@ -1,0 +1,28 @@
+<div ng-controller="ItemsController">
+    <h1>Items for sale</h1>
+
+    <p>Information shamelessly borrowed from <a href="http://www.guardian.co.uk/books/2003/oct/12/features.fiction">The Guardian</a></p>
+
+    <table id="novels" class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author(s)</th>
+            <th>Description</th>
+            <th>ISBN-13</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="novel in novels">
+            <td>{{novel.title}}</td>
+            <td><span ng-repeat="author in novel.authors">{{$last && author || author + ', '}}</span></td>
+            <td>{{novel.description}}</td>
+            <td>{{novel.isbn13}}</td>
+            <td>£{{novel.price}}</td>
+        </tr>
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+
+</div>

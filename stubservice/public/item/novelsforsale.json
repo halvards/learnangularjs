@@ -1,0 +1,82 @@
+[
+    {
+        "id": "274B8AE6-3CCC-49DA-BCF5-2DF633339BA3",
+        "title": "Don Quixote",
+        "authors": ["Miguel de Cervantes"],
+        "description": "The story of the gentle knight and his servant Sancho Panza has entranced readers for centuries.",
+        "isbn13": "9780099469698",
+        "price": "7.99"
+    },
+    {
+        "id": "86D09043-5B78-4078-9FAE-5F75E4D9E540",
+        "title": "Pilgrim's Progress",
+        "authors": ["John Bunyan"],
+        "description": "The one with the Slough of Despond and Vanity Fair.",
+        "isbn13": "9780141439716",
+        "price": "7.19"
+    },
+    {
+        "id": "957DE73B-3340-4640-B6FB-E400E56A13DF",
+        "title": "Robinson Crusoe",
+        "authors": ["Daniel Defoe"],
+        "description": "The first English novel.",
+        "isbn13": "9780141439822",
+        "price": "5.59"
+    },
+    {
+        "id": "961CCA19-2368-4377-AFF0-7AD900D06981",
+        "title": "Gulliver's Travels",
+        "authors": ["Jonathan Swift"],
+        "description": "A wonderful satire that still works for all ages, despite the savagery of Swift's vision.",
+        "isbn13": "9781847490889",
+        "price": "5.59"
+    },
+    {
+        "id": "3C2B1175-EDA6-49C9-B1AD-DC8515E9AE06",
+        "title": "Tom Jones",
+        "authors": ["Henry Fielding"],
+        "description": "The adventures of a high-spirited orphan boy: an unbeatable plot.",
+        "isbn13": "9781905716081",
+        "price": "16.20"
+    },
+    {
+        "id": "3B947BC9-2FDC-4186-8FA7-B10131638DA2",
+        "title": "Clarissa",
+        "authors": ["Samuel Richardson"],
+        "description": "One of the longest novels in the English language, but unputdownable.",
+        "isbn13": "9780395051641",
+        "price": "17.99"
+    },
+    {
+        "id": "6BA74C6C-E42D-4EA6-A3D3-F4112BDA252B",
+        "title": "The Life and Opinions of Tristram Shandy, Gentleman",
+        "authors": ["Laurence Sterne"],
+        "description": "One of the first bestsellers, dismissed by Dr Johnson as too fashionable for its own good.",
+        "isbn13": "9780141439778",
+        "price": "7.99"
+    },
+    {
+        "id": "D9AD8CBE-5923-42F0-BBC4-741DAE55DB64",
+        "title": "Dangerous Liaisons",
+        "authors": ["Pierre Choderlos de Laclos"],
+        "description": "An epistolary novel and a handbook for seducers: foppish, French, and ferocious.",
+        "isbn13": "9780140449570",
+        "price": "7.19"
+    },
+    {
+        "id": "F92696EF-DA32-4A36-AC88-F03D1517F9F7",
+        "title": "Emma",
+        "authors": ["Jane Austen"],
+        "description": "Near impossible choice between this and Pride and Prejudice. But Emma never fails to fascinate and annoy.",
+        "isbn13": "9780141439587",
+        "price": "5.59"
+    },
+    {
+        "id": "FCBA9C71-D8F7-49C7-96BF-9C7F25449941",
+        "title": "Frankenstein",
+        "authors": ["Mary Shelley"],
+        "description": "Inspired by spending too much time with Shelley and Byron.",
+        "isbn13": "9780141439471",
+        "price": "5.59"
+    }
+]

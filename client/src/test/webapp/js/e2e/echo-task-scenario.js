@@ -2,12 +2,12 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Todo List App', function () {
+describe('Bookstore App', function () {
 
-    it('should list task types', function () {
-        browser().navigateTo('tasks');
+    it('should list novels', function () {
+        browser().navigateTo('items');
         window.top.console.log("logging works");
-        expect(browser().location().url()).toBe('/tasks');
-        expect(element('#task option', 'List of task types').count()).toBe(4);
+        expect(browser().location().url()).toBe('/items');
+        expect(element('#novels tbody tr', 'List of novels for sale').count()).toBe(10);
     });
 });
