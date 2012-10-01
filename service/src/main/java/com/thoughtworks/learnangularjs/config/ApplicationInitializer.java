@@ -35,7 +35,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
                 .addMappingForUrlPatterns(null, false, "/*");
 
         addDispatcherServlet(servletContext, PublicWebConfig.class, "/public/*");
-//        addDispatcherServlet(servletContext, SecureWebConfig.class, "/secure/*");
+        addDispatcherServlet(servletContext, SecureWebConfig.class, "/secure/*");
     }
 
     private void addDispatcherServlet(ServletContext servletContext, Class applicationContextClass, String urlPattern) {
