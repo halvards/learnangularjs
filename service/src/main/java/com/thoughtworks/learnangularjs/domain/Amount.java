@@ -1,19 +1,27 @@
 package com.thoughtworks.learnangularjs.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Preconditions;
+import com.thoughtworks.learnangularjs.serialization.AmountDeserializer;
+import com.thoughtworks.learnangularjs.serialization.AmountSerializer;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 
+@JsonSerialize(using = AmountSerializer.class)
+@JsonDeserialize(using = AmountDeserializer.class)
 public class Amount implements Comparable<Amount> {
     private static final int SCALE = 2;
 
     private final BigDecimal amount;
 
     public Amount(String amount) {
-        this.amount = new BigDecimal(Preconditions.checkNotNull(amount));
-        this.amount.setScale(SCALE, RoundingMode.HALF_UP);
+        this(new BigDecimal(Preconditions.checkNotNull(amount)));
+    }
+
+    public Amount(BigDecimal amount) {
+        this.amount = amount.setScale(SCALE, RoundingMode.HALF_UP);
     }
 
     @Override
