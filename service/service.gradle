@@ -82,6 +82,7 @@ dependencies {
 
     def commonsCliVersion = '1.2'
     def hamcrestVersion = '1.3'
+    def hamcrestReflectionVersion = '0.1'
     def junitVersion = '4.10'
     def mockitoVersion = '1.9.0'
 
@@ -105,6 +106,7 @@ dependencies {
     testCompile "junit:junit:${junitVersion}",
                 "org.hamcrest:hamcrest-core:${hamcrestVersion}",
                 "org.hamcrest:hamcrest-library:${hamcrestVersion}",
+                "com.natpryce.hamcrest:hamcrest-reflection:${hamcrestReflectionVersion}",
                 "org.mockito:mockito-core:${mockitoVersion}",
                 "org.springframework:spring-test:${springFrameworkVersion}",
                 "commons-cli:commons-cli:${commonsCliVersion}"
