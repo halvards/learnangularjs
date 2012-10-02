@@ -21,7 +21,7 @@ public class Book {
         this(UUID.randomUUID(), title, authors, description, isbn13, price);
     }
 
-    // Required for JSON deserialization via BookBuilder
+    // Required for JSON deserialization
     @JsonCreator
     Book(@JsonProperty("id") UUID id,
             @JsonProperty("title") String title,
