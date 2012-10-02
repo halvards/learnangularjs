@@ -25,14 +25,15 @@ public class Amount implements Comparable<Amount> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Amount amount1 = (Amount) o;
-
-        if (!amount.equals(amount1.amount)) return false;
-
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        Amount that = (Amount) other;
+        if (!this.amount.equals(that.amount)) {
+            return false;
+        }
         return true;
     }
 

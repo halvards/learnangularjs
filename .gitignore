@@ -1,4 +1,5 @@
 build
+client/support/samples
 node_modules
 out
 target
