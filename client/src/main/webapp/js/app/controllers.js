@@ -5,5 +5,4 @@ function ItemsController($scope, Novels) {
 }
 
 function ErrorController($scope) {
-
 }

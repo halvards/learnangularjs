@@ -1,6 +1,6 @@
 'use strict';
 
-// ng is a built-in Angular module containing the services $q and $log
+// ng is a built-in Angular module containing the services $q, $log, and $location
 // console.log(), console.error(), etc also work but the console object is not available in IE
 
 angular.module('httpInterceptors', ['ng']).
@@ -22,10 +22,9 @@ angular.module('httpInterceptors', ['ng']).
                     $log.error(getResponseSummary(response));
                     return response;
                 });
-        }
+        };
     }).
-
-    factory('detectErrorInterceptor', function ($q, $log) {
+    factory('detectErrorInterceptor', function ($q, $log, $location) {
         return function (promise) {
             return promise.then(
                 function success(response) {
@@ -36,5 +35,5 @@ angular.module('httpInterceptors', ['ng']).
                     $location.path('/error');
                     return $q.reject(response);
                 });
-        }
+        };
     });
