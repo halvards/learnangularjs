@@ -1,18 +1,15 @@
 learnangularjs
 ==============
 
-An example AngularJS application with a Java backend.
+An example [AngularJS](http://angularjs.org/) application with a Java backend.
 
 # Requirements
 
 This project requires that [Gradle](http://gradle.org/), [PhantomJS](http://phantomjs.org/),
 and [NodeJS](http://nodejs.org/) are installed.
-Mac users can install all of them using homebrew:
+Mac users can install all of them using [Homebrew](http://mxcl.github.com/homebrew/):
 
-    brew update
-    brew install gradle
-    brew install phantomjs
-    brew install nodejs
+    brew update ; brew install gradle phantomjs nodejs
 
 Gradle is the build system used by the project, PhantomJS is used to run JavaScript unit tests and end-to-end scenarios in headless
 mode from the build, while NodeJS is used to run a simple Web server used by the client sub-project to stub the server-side.

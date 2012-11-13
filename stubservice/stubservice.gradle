@@ -1,9 +1,28 @@
-// Ensure this subproject becomes an IntelliJ IDEA Web Module rather than a Java Module
 idea.module.iml {
+    // Ensure this subproject becomes an IntelliJ IDEA Web Module rather than a Java Module
     withXml { module ->
         module.node.@type = 'WEB_MODULE'
         module.node.component.orderEntry.find { it.@type == 'inheritedJdk' }.replaceNode {}
     }
+}
+
+// Download NodeJS dependencies
+def resolveDependencies() {
+    ant.exec(executable: 'npm',
+             failonerror: true) {
+        ant.arg(value: 'install')
+    }
+}
+
+ideaModule << {
+    logging.setLevel(LogLevel.INFO)
+    resolveDependencies()
+}
+
+task resolve(description: 'Installs NodeJS dependencies',
+             group: 'build') << {
+    logging.setLevel(LogLevel.INFO)
+    resolveDependencies()
 }
 
 task clean(description: 'Deletes the build directory.',
