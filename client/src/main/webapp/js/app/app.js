@@ -1,13 +1,12 @@
 'use strict';
 
-
-angular.module('bookstoreApp', ['itemsService', 'httpInterceptors']).
+angular.module('bookstoreApp', ['booksModule', 'httpInterceptors']).
     config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
-        when('/items', {templateUrl:'partials/items.html'}).
-        when('/cart', {templateUrl:'partials/cart.html'}).
+        when('/books', {templateUrl:'partials/books.html'}).
+        when('/cart',  {templateUrl:'partials/cart.html'}).
         when('/error', {templateUrl:'partials/error.html'}).
-        otherwise({redirectTo:'/items'});
+        otherwise({redirectTo:'/books'});
 }]).config(['$httpProvider', function ($httpProvider) {
     $httpProvider.responseInterceptors.push('logResponseInterceptor');
     $httpProvider.responseInterceptors.push('detectErrorInterceptor');

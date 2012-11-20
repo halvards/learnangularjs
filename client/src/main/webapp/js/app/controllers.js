@@ -1,7 +1,9 @@
 'use strict';
 
-function ItemsController($scope, Novels) {
-    $scope.novels = Novels.query();
+function BooksController($scope, BooksService) {
+    $scope.init = function () {
+        $scope.books = BooksService.query();
+    };
 }
 
 function ErrorController($scope) {

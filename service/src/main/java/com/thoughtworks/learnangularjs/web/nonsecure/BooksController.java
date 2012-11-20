@@ -14,9 +14,9 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/item")
-public class ItemsController {
+public class BooksController {
 
-    @RequestMapping(value = "/novelsforsale.json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/booksforsale.json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Book> getNovelsForSale() {
         return ImmutableList.of(

@@ -1,9 +1,9 @@
-<div ng-controller="ItemsController">
+<div ng-controller="BooksController" ng-init="init()">
     <h1>Items for sale</h1>
 
     <p>Information shamelessly borrowed from <a href="http://www.guardian.co.uk/books/2003/oct/12/features.fiction">The Guardian</a></p>
 
-    <table id="novels" class="table">
+    <table id="booksforsale" class="table">
         <thead>
         <tr>
             <th>Title</th>
@@ -14,12 +14,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="novel in novels">
-            <td>{{novel.title}}</td>
-            <td><span ng-repeat="author in novel.authors">{{$last && author || author + ', '}}</span></td>
-            <td>{{novel.description}}</td>
-            <td>{{novel.isbn13}}</td>
-            <td>£{{novel.price}}</td>
+        <tr ng-repeat="book in books">
+            <td>{{book.title}}</td>
+            <td><span ng-repeat="author in book.authors">{{$last && author || author + ', '}}</span></td>
+            <td>{{book.description}}</td>
+            <td>{{book.isbn13}}</td>
+            <td>{{book.price}}</td>
         </tr>
         </tbody>
         <tfoot></tfoot>

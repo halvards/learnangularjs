@@ -1,13 +1,21 @@
 'use strict';
 
-describe('Task List controllers', function() {
-    beforeEach(module('tasksService'))
+describe('BooksController', function () {
+    it('init should load books for sale', function () {
+        var scope = {};
+        var controller = new BooksController(scope, StubBooksService());
+        scope.init();
+        expect(scope.books).toEqual(StubBooksService().query());
+    });
 
-    describe('ItemsController', function() {
-
-        it("dummy", function() {
-            expect(true).toBe(true);
-        });
-
-    })
+    function StubBooksService() {
+        return {
+            query:function () {
+                return [
+                    { "title":"Book 1" },
+                    { "title":"Book 2" }
+                ];
+            }
+        };
+    }
 });

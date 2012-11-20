@@ -3,11 +3,10 @@
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
 describe('Bookstore App', function () {
-
     it('should list novels', function () {
-        browser().navigateTo('items');
+        browser().navigateTo('books');
         window.top.console.log("logging works");
-        expect(browser().location().url()).toBe('/items');
-        expect(element('#novels tbody tr', 'List of novels for sale').count()).toBe(10);
+        expect(browser().location().url()).toBe('/books');
+        expect(element('#booksforsale tbody tr', 'List of books for sale').count()).toBe(10);
     });
 });
