@@ -70,10 +70,11 @@ processResources << {
 
 dependencies {
     def cglibVersion = '2.2.2'
-    def commonsLangVersion = '2.6'
+    def commonsLang3Version = '3.1'
     def guavaVersion = '13.0.1'
     def jacksonVersion = '2.0.6'
     def jodaTimeVersion = '2.1'
+    def jsonPathVersion = '0.8.1'
     def jsr250ApiVersion = '1.0'
     def slf4jVersion = '1.7.0'
     def logbackVersion = '1.0.7'
@@ -95,8 +96,9 @@ dependencies {
             "org.springframework.security:spring-security-web:${springSecurityVersion}",
             "javax.annotation:jsr250-api:${jsr250ApiVersion}",
             "com.google.guava:guava:${guavaVersion}",
-            "commons-lang:commons-lang:${commonsLangVersion}",
+            "org.apache.commons:commons-lang3:${commonsLang3Version}",
             "joda-time:joda-time:${jodaTimeVersion}",
+            "com.jayway.jsonpath:json-path:${jsonPathVersion}",
 //            "ch.qos.logback:logback-classic:${logbackVersion}",
             "org.slf4j:slf4j-simple:${slf4jVersion}",
             "org.slf4j:slf4j-api:${slf4jVersion}",
@@ -109,7 +111,8 @@ dependencies {
                 "com.natpryce.hamcrest:hamcrest-reflection:${hamcrestReflectionVersion}",
                 "org.mockito:mockito-core:${mockitoVersion}",
                 "org.springframework:spring-test:${springFrameworkVersion}",
-                "commons-cli:commons-cli:${commonsCliVersion}"
+                "commons-cli:commons-cli:${commonsCliVersion}",
+                "com.jayway.jsonpath:json-path-assert:${jsonPathVersion}"
 
     providedCompile "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
                     "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",

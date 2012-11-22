@@ -1,10 +1,11 @@
 load:
-  - src/test/webapp/js/lib/unit/jasmine.js
-  - src/test/webapp/js/lib/unit/JasmineAdapter.js
+  - src/main/webapp/js/lib/jquery/jquery.js
+  - src/test/webapp/js/lib/unit/jasmine/jasmine.js
+  - src/test/webapp/js/lib/unit/angular/JasmineAdapter.js
   - src/main/webapp/js/lib/angular/angular.js
   - src/main/webapp/js/lib/angular/angular-resource.js
-  - src/test/webapp/js/lib/unit/angular-mocks.js
-  - src/main/webapp/js/lib/jquery/jquery.js
+  - src/test/webapp/js/lib/unit/angular/angular-mocks.js
+  - src/test/webapp/js/lib/unit/jsonpath/jsonpath.js
   - src/main/webapp/js/app/*.js
 
 test:
