@@ -1,1 +1,3 @@
+http://bestiejs.github.com/json3/
+OR
 https://github.com/douglascrockford/JSON-js
