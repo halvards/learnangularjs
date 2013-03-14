@@ -1,3 +1,5 @@
+/* exported BooksController, ErrorController */
+
 'use strict';
 
 function BooksController($scope, BooksService) {
@@ -6,5 +8,5 @@ function BooksController($scope, BooksService) {
     };
 }
 
-function ErrorController($scope) {
+function ErrorController() {
 }

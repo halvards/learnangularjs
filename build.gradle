@@ -20,11 +20,12 @@ task clean(description: 'Deletes the build directory produced by Gradle and the 
 idea.project.ipr {
     withXml { provider ->
         provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+        provider.node.component.find { it.@name == 'ProjectRootManager' }.@"assert-jdk-15" = 'true'
     }
 }
 
 def startServiceRunConfiguration = '''
-    <configuration default="false" name="Run Service" type="Application" factoryName="Application">
+    <configuration default="false" name="Run Service" type="Application" factoryName="Application" singleton="true">
       <option name="MAIN_CLASS_NAME" value="com.thoughtworks.learnangularjs.server.TomcatServer" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -42,32 +43,34 @@ def startServiceRunConfiguration = '''
     </configuration>
 '''
 
-def startStubServiceRunConfiguration = '''
-    <configuration default="false" name="Run Stub Service" type="NodeJSConfigurationType" factoryName="Node JS" path-to-node="/usr/local/bin/node" path-to-js-file="stubservice.js" working-dir="$PROJECT_DIR$/stubservice">
+def clientUnitTestContinuousRunConfiguration = '''
+    <configuration default="false" name="Client Unit Tests (continuous)" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/testacular/bin/testacular" application-parameters="start support/unit.conf.js --no-single-run --reporters progress" working-dir="$PROJECT_DIR$/client" coffeescript-run="false">
       <RunnerSettings RunnerId="NodeJS.run" />
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
 '''
 
-def clientUnitTestRunConfiguration = '''
-    <configuration default="false" name="Client Unit Tests" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
-      <setting name="configLocationType" value="CONFIG_FILE" />
-      <setting name="settingsFile" value="$PROJECT_DIR$/client/unit.jstd" />
-      <setting name="serverType" value="INTERNAL" />
-      <RunnerSettings RunnerId="JsTestDriverClientRunner" />
-      <ConfigurationWrapper RunnerId="JsTestDriverClientRunner" />
+def clientUnitTestOnceRunConfiguration = '''
+    <configuration default="false" name="Client Unit Tests (once)" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/testacular/bin/testacular" application-parameters="start support/unit.conf.js --single-run --reporters progress" working-dir="$PROJECT_DIR$/client" coffeescript-run="false">
+      <RunnerSettings RunnerId="NodeJS.run" />
+      <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
 '''
 
 def e2eTestRunConfiguration = '''
-    <configuration default="false" name="E2E Scenario Tests" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
-      <setting name="configLocationType" value="CONFIG_FILE" />
-      <setting name="settingsFile" value="$PROJECT_DIR$/client/e2e.jstd" />
-      <setting name="serverType" value="INTERNAL" />
-      <RunnerSettings RunnerId="JsTestDriverClientRunner" />
-      <ConfigurationWrapper RunnerId="JsTestDriverClientRunner" />
+    <configuration default="false" name="E2E Scenario Tests" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/testacular/bin/testacular" application-parameters="start support/e2e.conf.js --single-run --reporters progress" working-dir="$PROJECT_DIR$/client" coffeescript-run="false">
+      <RunnerSettings RunnerId="NodeJS.run" />
+      <ConfigurationWrapper RunnerId="NodeJS.run" />
+      <method />
+    </configuration>
+'''
+
+def startStubServiceRunConfiguration = '''
+    <configuration default="false" name="Run Stub Service" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="stubservice.js" working-dir="$PROJECT_DIR$/stubservice" coffeescript-run="false">
+      <RunnerSettings RunnerId="NodeJS.run" />
+      <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
 '''
@@ -130,9 +133,10 @@ idea.workspace.iws {
         // Add run configurations
         def runManagerComponentNode = workspace.node.component.find { it.@name == 'RunManager' }
         runManagerComponentNode.append(new XmlParser().parseText(startServiceRunConfiguration))
-        runManagerComponentNode.append(new XmlParser().parseText(startStubServiceRunConfiguration))
-        runManagerComponentNode.append(new XmlParser().parseText(clientUnitTestRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(clientUnitTestContinuousRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(clientUnitTestOnceRunConfiguration))
         runManagerComponentNode.append(new XmlParser().parseText(e2eTestRunConfiguration))
+        runManagerComponentNode.append(new XmlParser().parseText(startStubServiceRunConfiguration))
         runManagerComponentNode.append(new XmlParser().parseText(serviceUnitTestRunConfiguration))
         runManagerComponentNode.append(new XmlParser().parseText(serviceIntegrationTestRunConfiguration))
     }

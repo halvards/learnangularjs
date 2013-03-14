@@ -1,15 +1,17 @@
 def version = '1.0.0'
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.eriwen:gradle-js-plugin:1.1'
+// Download NodeJS dependencies
+def resolveDependencies() {
+    ant.exec(executable: 'npm',
+            failonerror: true) {
+        ant.arg(value: 'install')
     }
 }
 
-apply plugin: 'js'
+ideaModule << {
+    logging.setLevel(LogLevel.INFO)
+    resolveDependencies()
+}
 
 // Ensure this subproject becomes an IntelliJ IDEA Web Module rather than a Java Module
 idea.module.iml {
@@ -19,60 +21,56 @@ idea.module.iml {
     }
 }
 
+task resolve(description: 'Installs NodeJS dependencies',
+        group: 'build') << {
+    logging.setLevel(LogLevel.INFO)
+    resolveDependencies()
+}
+
 task clean(description: 'Deletes the build directory.',
            group: 'build') << {
     delete "${buildDir}"
 }
 
+task autotest(description: 'Runs the unit tests every time a file changes.',
+          group: 'verification') << {
+    logging.setLevel(LogLevel.INFO)
+    println '-------------------------------------------'
+    println ' U N I T  T E S T S - C O N T I N U O U S  '
+    println '-------------------------------------------'
+    ant.exec(executable: 'node_modules/testacular/bin/testacular',
+            failonerror: true) {
+        ant.arg(value: 'start')
+        ant.arg(value: 'support/unit.conf.js')
+        ant.arg(value: '--no-single-run')
+        ant.arg(value: '--reporters')
+        ant.arg(value: 'progress')
+    }
+}
+
 task test(description: 'Runs the unit tests.',
           group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
-    def unitTestReportDir = "${buildDir}/jstd-unit-reports"
-    mkdir unitTestReportDir  // must be created before jstd is run
     println '-------------------------------------------'
-    println ' J S  T E S T  D R I V E R  -  U N I T     '
+    println ' U N I T  T E S T S                        '
     println '-------------------------------------------'
-    ant.java(jar: 'support/JsTestDriver-1.3.5.jar',
-             fork: true,
-             failonerror: true,
-             timeout: 60000) {
-        ant.arg(value: '--browser')
-        ant.arg(value: 'phantomjs;support/phantomjs-jstd-bridge.js')
-        ant.arg(value: '--captureConsole')
-        ant.arg(value: 'true')
-        ant.arg(value: '--config')
-        ant.arg(value: 'unit.jstd')
-        ant.arg(value: '--port')
-        ant.arg(value: '9879')
-        ant.arg(value: '--testOutput')
-        ant.arg(value: unitTestReportDir)
-        ant.arg(value: '--tests')
-        ant.arg(value: 'all')
+    ant.exec(executable: 'node_modules/testacular/bin/testacular',
+            failonerror: true) {
+        ant.arg(value: 'start')
+        ant.arg(value: 'support/unit.conf.js')
+        ant.arg(value: '--single-run')
     }
 }
 
 def executeScenarioTests() {
-    def e2eTestReportDir = "${buildDir}/jstd-e2e-reports"
-    mkdir e2eTestReportDir  // must be created before jstd is run
     println '-------------------------------------------'
-    println ' J S  T E S T  D R I V E R  -  E 2 E       '
+    println ' E 2 E  T E S T S                          '
     println '-------------------------------------------'
-    ant.java(jar: 'support/JsTestDriver-1.3.5.jar',
-             fork: true,
-             failonerror: true,
-             timeout: 300000) {
-        ant.arg(value: '--browser')
-        ant.arg(value: 'phantomjs;support/phantomjs-jstd-bridge.js')
-        ant.arg(value: '--captureConsole')
-        ant.arg(value: 'true')
-        ant.arg(value: '--config')
-        ant.arg(value: 'e2e.jstd')
-        ant.arg(value: '--port')
-        ant.arg(value: '9880')
-        ant.arg(value: '--testOutput')
-        ant.arg(value: e2eTestReportDir)
-        ant.arg(value: '--tests')
-        ant.arg(value: 'all')
+    ant.exec(executable: 'node_modules/testacular/bin/testacular',
+            failonerror: true) {
+        ant.arg(value: 'start')
+        ant.arg(value: 'support/e2e.conf.js')
+        ant.arg(value: '--single-run')
     }
 }
 
@@ -90,20 +88,17 @@ task scenarioTestStub(dependsOn: ':stubservice:runServiceDaemon',
     executeScenarioTests()
 }
 
-task jshint(overwrite: true,
-            description: 'Runs JSHint on the main source files.',
+task jshint(description: 'Runs JSHint on the main application source files.',
             group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'
     println ' J S  H I N T                              '
     println '-------------------------------------------'
-    ant.taskdef(name: 'jshint', classname: 'com.philmander.jshint.JsHintAntTask', classpath: 'support/ant-jshint-0.3.1.jar')
-    ant.jshint(dir: 'src/main/webapp/js',
-               globals: 'jQuery=true, $=true, angular=true',
-               optionsFile: "${projectDir}/support/jshint-options.properties") {
-        ant.include(name: 'app/**/*.js')
-        ant.exclude(name: 'lib/**/*.js')
-        ant.report(type: 'xml', destFile: "${buildDir}/jshint-report.xml")
+    ant.exec(executable: 'node_modules/jshint/bin/jshint',
+            failonerror: true) {
+        ant.arg(value: '--config')
+        ant.arg(value: 'support/jshint-options.json')
+        ant.arg(value: 'src/main/webapp/js/app')
     }
 }
 

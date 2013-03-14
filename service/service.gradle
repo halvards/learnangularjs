@@ -71,23 +71,23 @@ processResources << {
 dependencies {
     def cglibVersion = '2.2.2'
     def commonsLang3Version = '3.1'
-    def guavaVersion = '13.0.1'
-    def jacksonVersion = '2.0.6'
-    def jodaTimeVersion = '2.1'
+    def guavaVersion = '14.0'
+    def jacksonVersion = '2.1.4'
+    def jodaTimeVersion = '2.2'
     def jsonPathVersion = '0.8.1'
     def jsr250ApiVersion = '1.0'
-    def slf4jVersion = '1.7.0'
-    def logbackVersion = '1.0.7'
-    def springFrameworkVersion = '3.1.2.RELEASE'
-    def springSecurityVersion = '3.1.2.RELEASE'
+    def slf4jVersion = '1.7.2'
+    def logbackVersion = '1.0.9'
+    def springFrameworkVersion = '3.2.2.RELEASE'
+    def springSecurityVersion = '3.1.3.RELEASE'
 
     def commonsCliVersion = '1.2'
     def hamcrestVersion = '1.3'
     def hamcrestReflectionVersion = '0.1'
-    def junitVersion = '4.10'
-    def mockitoVersion = '1.9.0'
+    def junitVersion = '4.11'
+    def mockitoVersion = '1.9.5'
 
-    def tomcatVersion = '7.0.30'
+    def tomcatVersion = '7.0.37'
 
     compile "org.springframework:spring-webmvc:${springFrameworkVersion}",
             "cglib:cglib:${cglibVersion}",

@@ -2,6 +2,7 @@ build
 client/support/samples
 node_modules
 out
+projectFilesBackup*
 target
 tmp
 .DS_Store

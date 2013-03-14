@@ -1,0 +1,9 @@
+{
+    "name": "client",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "testacular": "0.6.x",
+        "jshint": "1.1.x"
+    }
+}

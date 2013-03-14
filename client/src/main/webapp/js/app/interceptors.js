@@ -3,7 +3,7 @@
 // ng is a built-in Angular module containing the services $q, $log, and $location
 // console.log(), console.error(), etc also work but the console object is not available in IE
 angular.module('httpInterceptors', ['ng']).
-    factory('logResponseInterceptor', function ($q, $log) {
+    factory('logResponseInterceptor', function ($log) {
         return function (promise) {
             function getResponseSummary(response) {
                 return response.config.method + ' ' +
