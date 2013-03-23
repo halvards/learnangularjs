@@ -1,5 +1,5 @@
 // Configuration file for unit tests
-// http://testacular.github.com/0.6.0/config/configuration-file.html
+// http://karma-runner.github.com/0.8/config/configuration-file.html
 
 // Used to resolve files, relative to this file
 basePath = '../';

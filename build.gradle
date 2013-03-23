@@ -44,7 +44,7 @@ def startServiceRunConfiguration = '''
 '''
 
 def clientUnitTestContinuousRunConfiguration = '''
-    <configuration default="false" name="Client Unit Tests (continuous)" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/testacular/bin/testacular" application-parameters="start support/unit.conf.js --no-single-run --reporters progress" working-dir="$PROJECT_DIR$/client" coffeescript-run="false">
+    <configuration default="false" name="Client Unit Tests (continuous)" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/karma/bin/karma" application-parameters="start support/unit.conf.js --no-single-run --reporters progress" working-dir="$PROJECT_DIR$/client" coffeescript-run="false">
       <RunnerSettings RunnerId="NodeJS.run" />
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
@@ -52,7 +52,7 @@ def clientUnitTestContinuousRunConfiguration = '''
 '''
 
 def clientUnitTestOnceRunConfiguration = '''
-    <configuration default="false" name="Client Unit Tests (once)" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/testacular/bin/testacular" application-parameters="start support/unit.conf.js --single-run --reporters progress" working-dir="$PROJECT_DIR$/client" coffeescript-run="false">
+    <configuration default="false" name="Client Unit Tests (once)" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/karma/bin/karma" application-parameters="start support/unit.conf.js --single-run --reporters progress" working-dir="$PROJECT_DIR$/client" coffeescript-run="false">
       <RunnerSettings RunnerId="NodeJS.run" />
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
@@ -60,7 +60,7 @@ def clientUnitTestOnceRunConfiguration = '''
 '''
 
 def e2eTestRunConfiguration = '''
-    <configuration default="false" name="E2E Scenario Tests" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/testacular/bin/testacular" application-parameters="start support/e2e.conf.js --single-run --reporters progress" working-dir="$PROJECT_DIR$/client" coffeescript-run="false">
+    <configuration default="false" name="E2E Scenario Tests" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="node_modules/karma/bin/karma" application-parameters="start support/e2e.conf.js --single-run --reporters progress" working-dir="$PROJECT_DIR$/client" coffeescript-run="false">
       <RunnerSettings RunnerId="NodeJS.run" />
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
