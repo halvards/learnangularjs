@@ -21,6 +21,7 @@ idea.project.ipr {
     withXml { provider ->
         provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
         provider.node.component.find { it.@name == 'ProjectRootManager' }.@"assert-jdk-15" = 'true'
+        provider.node.component.find { it.@name == 'ProjectRootManager' }.@languageLevel = 'JDK_1_7'
     }
 }
 
