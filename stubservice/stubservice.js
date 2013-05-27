@@ -1,5 +1,7 @@
+#!/usr/bin/env node
+
 var express = require('express')
-    , authenticate = require('./authenticate');
+  , authenticate = require('./authenticate');
 
 var app = express();
 app.configure(function () {
@@ -10,6 +12,7 @@ app.configure(function () {
     app.use(express.session({ secret:'keyboard cat' }));
     authenticate.configure(app);  // this must appear _before_ app.use(app.router)
     app.use(app.router);
+    app.enable('trust proxy');
 
     // Serve up the client JS application
     app.use('/app', express.static('../client/src/main/webapp'));
