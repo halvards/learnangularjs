@@ -43,6 +43,7 @@ public abstract class TinyType<T extends Comparable & Serializable> implements C
         return new HashCodeBuilder().append(getValue()).toHashCode();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public int compareTo(TinyType<T> that) {
         if (this.getClass() != that.getClass()) {
