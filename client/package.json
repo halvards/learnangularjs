@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "private": true,
     "dependencies": {
-        "karma": "0.8.x",
-        "jshint": "1.1.x"
+        "jade": ">=0.30.0",
+        "jshint": "2.1.x",
+        "karma": "0.9.x",
+        "stylus": ">=0.32.1"
     }
 }

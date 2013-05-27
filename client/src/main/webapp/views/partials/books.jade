@@ -1,0 +1,21 @@
+div(ng-controller="BooksController", ng-init="init()")
+  h1 Items for sale
+
+  p Information shamelessly borrowed from <a href="http://www.guardian.co.uk/books/2003/oct/12/features.fiction">The Guardian</a>
+
+  table#booksforsale.table
+    thead
+      tr
+        th Title
+        th Author(s)
+        th Description
+        th ISBN-13
+        th Price
+    tbody
+      tr(ng-repeat="book in books")
+        td {{book.title}}
+        td
+          span(ng-repeat="author in book.authors") {{$last && author || author + ', '}}
+        td {{book.description}}
+        td {{book.isbn13}}
+        td {{book.price}}
