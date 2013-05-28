@@ -3,11 +3,13 @@
     "version":"1.0.0",
     "private":true,
     "scripts":{
-        "start":"node stubservice"
+        "start":"./node_modules/supervisor/lib/cli-wrapper.js -i node_modules stubservice"
     },
     "dependencies":{
-        "express":"3.0.x",
-        "passport":"0.1.12",
-        "passport-local":"0.1.6"
+        "express":"3.2.x",
+        "passport":"0.1.17",
+        "passport-local":"0.1.6",
+        "supervisor":"0.5.x",
+        "underscore":"1.4.x"
     }
 }
