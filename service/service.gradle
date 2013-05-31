@@ -10,10 +10,10 @@ buildscript {
 }
 
 //apply plugin: 'checkstyle' // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.CheckstyleExtension.html
-apply plugin: 'cobertura'  // https://github.com/stevesaliman/gradle-cobertura-plugin
+//apply plugin: 'cobertura'  // https://github.com/stevesaliman/gradle-cobertura-plugin
 //apply plugin: 'findbugs'   // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html
 apply plugin: 'java'       // http://www.gradle.org/docs/current/userguide/java_plugin.html
-apply plugin: 'jdepend'    // http://gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.JDependExtension.html
+//apply plugin: 'jdepend'    // http://gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.JDependExtension.html
 apply plugin: 'maven'      // http://www.gradle.org/docs/current/userguide/maven_plugin.html
 apply plugin: 'war'        // http://www.gradle.org/docs/current/userguide/war_plugin.html
 

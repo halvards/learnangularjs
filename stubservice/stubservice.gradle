@@ -8,6 +8,9 @@ idea.module.iml {
 
 // Download NodeJS dependencies
 def resolveDependencies() {
+    println '-------------------------------------------'
+    println ' N P M  I N S T A L L                      '
+    println '-------------------------------------------'
     ant.exec(executable: 'npm',
              failonerror: true) {
         ant.arg(value: 'install')
@@ -27,6 +30,10 @@ task resolve(description: 'Installs NodeJS dependencies',
 
 task clean(description: 'Deletes the build directory.',
            group: 'build') << {
+    logging.setLevel(LogLevel.INFO)
+    println '-------------------------------------------'
+    println ' C L E A N                                 '
+    println '-------------------------------------------'
     delete "${buildDir}"
 }
 
@@ -56,3 +63,10 @@ task runService(description: 'Starts up the STUB service using NodeJS.',
         ant.arg(value: 'stubservice.js')
     }
 }
+
+task assemble(dependsOn: 'resolve',
+              description: 'Prepares all prerequisites',
+              group: 'build')
+
+task check(description: 'Runs all checks.',
+           group: 'verification')

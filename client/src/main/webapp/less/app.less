@@ -1,0 +1,13 @@
+// Not currently used
+.example-border-radius (@radius) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.example-user-list {
+  // need to use special `.` syntax
+  .example-border-radius(10px);
+}

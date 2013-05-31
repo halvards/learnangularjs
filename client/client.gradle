@@ -2,6 +2,9 @@ def version = '1.0.0'
 
 // Download NodeJS dependencies
 def resolveDependencies() {
+    println '-------------------------------------------'
+    println ' N P M  I N S T A L L                      '
+    println '-------------------------------------------'
     ant.exec(executable: 'npm',
             failonerror: true) {
         ant.arg(value: 'install')
@@ -22,18 +25,22 @@ idea.module.iml {
 }
 
 task resolve(description: 'Installs NodeJS dependencies',
-        group: 'build') << {
+             group: 'build') << {
     logging.setLevel(LogLevel.INFO)
     resolveDependencies()
 }
 
 task clean(description: 'Deletes the build directory.',
            group: 'build') << {
+    logging.setLevel(LogLevel.INFO)
+    println '-------------------------------------------'
+    println ' C L E A N                                 '
+    println '-------------------------------------------'
     delete "${buildDir}"
 }
 
 task autotest(description: 'Runs the unit tests every time a file changes.',
-          group: 'verification') << {
+              group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'
     println ' U N I T  T E S T S - C O N T I N U O U S  '
@@ -74,20 +81,6 @@ def executeScenarioTests() {
     }
 }
 
-task scenarioTest(dependsOn: ':service:runServiceDaemon',
-                  description: 'Runs the scenario tests against the real service.',
-                  group: 'verification') << {
-    logging.setLevel(LogLevel.INFO)
-    executeScenarioTests()
-}
-
-task scenarioTestStub(dependsOn: ':stubservice:runServiceDaemon',
-                      description: 'Runs the scenario tests against the stub service.',
-                      group: 'verification') << {
-    logging.setLevel(LogLevel.INFO)
-    executeScenarioTests()
-}
-
 task jshint(description: 'Runs JSHint on the main application source files.',
             group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
@@ -95,17 +88,111 @@ task jshint(description: 'Runs JSHint on the main application source files.',
     println ' J S  H I N T                              '
     println '-------------------------------------------'
     ant.exec(executable: 'node_modules/jshint/bin/jshint',
-            failonerror: true) {
+             failonerror: true) {
         ant.arg(value: '--config')
         ant.arg(value: 'support/jshint-options.json')
         ant.arg(value: 'src/main/webapp/js/app')
     }
 }
 
-task check(dependsOn: [jshint, test, scenarioTest],
+task autojade(description: 'Watch the Jade templates for changes and regenerate HTML partials when there is a change.',
+              group: 'build') << {
+    logging.setLevel(LogLevel.INFO)
+    println '-------------------------------------------'
+    println ' J A D E - C O N T I N U O U S             '
+    println '-------------------------------------------'
+    ant.exec(executable: 'node_modules/jade/bin/jade',
+            failonerror: true) {
+        ant.arg(value: '--watch')
+        ant.arg(value: '--pretty')
+        ant.arg(value: '--out')
+        ant.arg(value: 'src/main/webapp/partials')
+        ant.arg(value: 'src/main/webapp/views')
+    }
+}
+
+task jade(description: 'Generates HTML partials from the Jade templates.',
+          group: 'build') << {
+    logging.setLevel(LogLevel.INFO)
+    println '-------------------------------------------'
+    println ' J A D E                                   '
+    println '-------------------------------------------'
+    ant.exec(executable: 'node_modules/jade/bin/jade',
+            failonerror: true) {
+        ant.arg(value: '--pretty')
+        ant.arg(value: '--out')
+        ant.arg(value: 'src/main/webapp/partials')
+        ant.arg(value: 'src/main/webapp/views')
+    }
+}
+
+task autoless(description: 'Watch the LESS files for changes and regenerate CSS files when there is a change.',
+              group: 'build') << {
+    logging.setLevel(LogLevel.INFO)
+    println '-------------------------------------------'
+    println ' L E S S - C O N T I N U O U S             '
+    println '-------------------------------------------'
+    new File('src/main/webapp/css').mkdirs()
+    ant.exec(executable: 'node_modules/recess/bin/recess',
+             failonerror: true) {
+        ant.arg(value: 'src/main/webapp/less/app.less:src/main/webapp/css/app.css')
+        ant.arg(value: '--compile')
+        ant.arg(value: '--watch')
+        ant.arg(value: 'src/main/webapp/less')
+    }
+}
+
+task less(description: 'Generates CSS files from the LESS files.',
+          group: 'build') << {
+    logging.setLevel(LogLevel.INFO)
+    println '-------------------------------------------'
+    println ' L E S S  C O M P I L E                    '
+    println '-------------------------------------------'
+    new File('src/main/webapp/css').mkdirs()
+    ant.exec(executable: 'node_modules/recess/bin/recess',
+             failonerror: true,
+             output: 'src/main/webapp/css/app.css',
+             logError: 'true') {
+        ant.arg(value: 'src/main/webapp/less/app.less')
+        ant.arg(value: '--compile')
+    }
+}
+
+task lesslint(description: 'Lints CSS and LESS files.',
+              group: 'verification') << {
+    logging.setLevel(LogLevel.INFO)
+    println '-------------------------------------------'
+    println ' L E S S  L I N T                          '
+    println '-------------------------------------------'
+    new File('src/main/webapp/css').mkdirs()
+    ant.exec(executable: 'node_modules/recess/bin/recess',
+             failonerror: true) {
+        ant.arg(value: 'src/main/webapp/less/*.less')
+    }
+}
+
+task scenarioTest(dependsOn: [jade, less, ':service:runServiceDaemon'],
+                  description: 'Runs the scenario tests against the real service.',
+                  group: 'verification') << {
+    logging.setLevel(LogLevel.INFO)
+    executeScenarioTests()
+}
+
+task scenarioTestStub(dependsOn: [jade, less, ':stubservice:runServiceDaemon'],
+                      description: 'Runs the scenario tests against the stub service.',
+                      group: 'verification') << {
+    logging.setLevel(LogLevel.INFO)
+    executeScenarioTests()
+}
+
+task check(dependsOn: [jshint, lesslint, test, scenarioTest],
            description: 'Runs all checks.',
            group: 'verification')
 
-task checkStub(dependsOn: [jshint, test, scenarioTestStub],
+task checkStub(dependsOn: [jshint, lesslint, test, scenarioTestStub],
                description: 'Runs all checks with stub service.',
                group: 'verification')
+
+task assemble(dependsOn: [resolve, jade, less],
+              description: 'Prepares all prerequisites',
+              group: 'build')

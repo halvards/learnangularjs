@@ -1,5 +1,7 @@
 build
 client/support/samples
+client/src/main/webapp/css/*.css
+client/src/main/webapp/partials/*.html
 node_modules
 out
 projectFilesBackup*
