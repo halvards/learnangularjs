@@ -2,12 +2,10 @@ def version = '1.0.0'
 
 // Download NodeJS dependencies
 def resolveDependencies() {
-    println '-------------------------------------------'
-    println ' N P M  I N S T A L L                      '
-    println '-------------------------------------------'
     ant.exec(executable: 'npm',
             failonerror: true) {
         ant.arg(value: 'install')
+        ant.arg(value: '--silent')
     }
 }
 
@@ -39,7 +37,8 @@ task clean(description: 'Deletes the build directory.',
     delete "${buildDir}"
 }
 
-task autotest(description: 'Runs the unit tests every time a file changes.',
+task autotest(dependsOn: 'resolve',
+              description: 'Runs the unit tests every time a file changes.',
               group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'
@@ -55,7 +54,8 @@ task autotest(description: 'Runs the unit tests every time a file changes.',
     }
 }
 
-task test(description: 'Runs the unit tests.',
+task test(dependsOn: 'resolve',
+          description: 'Runs the unit tests.',
           group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'
@@ -81,7 +81,8 @@ def executeScenarioTests() {
     }
 }
 
-task jshint(description: 'Runs JSHint on the main application source files.',
+task jshint(dependsOn: 'resolve',
+            description: 'Runs JSHint on the main application source files.',
             group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'
@@ -95,7 +96,8 @@ task jshint(description: 'Runs JSHint on the main application source files.',
     }
 }
 
-task autojade(description: 'Watch the Jade templates for changes and regenerate HTML partials when there is a change.',
+task autojade(dependsOn: 'resolve',
+              description: 'Watch the Jade templates for changes and regenerate HTML partials when there is a change.',
               group: 'build') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'
@@ -111,7 +113,8 @@ task autojade(description: 'Watch the Jade templates for changes and regenerate 
     }
 }
 
-task jade(description: 'Generates HTML partials from the Jade templates.',
+task jade(dependsOn: 'resolve',
+          description: 'Generates HTML partials from the Jade templates.',
           group: 'build') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'
@@ -126,7 +129,8 @@ task jade(description: 'Generates HTML partials from the Jade templates.',
     }
 }
 
-task autoless(description: 'Watch the LESS files for changes and regenerate CSS files when there is a change.',
+task autoless(dependsOn: 'resolve',
+              description: 'Watch the LESS files for changes and regenerate CSS files when there is a change.',
               group: 'build') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'
@@ -142,7 +146,8 @@ task autoless(description: 'Watch the LESS files for changes and regenerate CSS 
     }
 }
 
-task less(description: 'Generates CSS files from the LESS files.',
+task less(dependsOn: 'resolve',
+          description: 'Generates CSS files from the LESS files.',
           group: 'build') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'
@@ -158,7 +163,8 @@ task less(description: 'Generates CSS files from the LESS files.',
     }
 }
 
-task lesslint(description: 'Lints CSS and LESS files.',
+task lesslint(dependsOn: 'resolve',
+              description: 'Lints CSS and LESS files.',
               group: 'verification') << {
     logging.setLevel(LogLevel.INFO)
     println '-------------------------------------------'

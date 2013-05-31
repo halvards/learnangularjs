@@ -8,12 +8,10 @@ idea.module.iml {
 
 // Download NodeJS dependencies
 def resolveDependencies() {
-    println '-------------------------------------------'
-    println ' N P M  I N S T A L L                      '
-    println '-------------------------------------------'
     ant.exec(executable: 'npm',
              failonerror: true) {
         ant.arg(value: 'install')
+        ant.arg(value: '--silent')
     }
 }
 
@@ -37,7 +35,8 @@ task clean(description: 'Deletes the build directory.',
     delete "${buildDir}"
 }
 
-task runServiceDaemon(description: 'Runs the STUB service as a daemon for scenario tests in automated build.',
+task runServiceDaemon(dependsOn: 'resolve',
+                      description: 'Runs the STUB service as a daemon for scenario tests in automated build.',
                       group: 'application') << {
     logging.setLevel(LogLevel.INFO)
     def serverTimeoutMillis = 300000
@@ -55,7 +54,8 @@ task runServiceDaemon(description: 'Runs the STUB service as a daemon for scenar
     }
 }
 
-task runService(description: 'Starts up the STUB service using NodeJS.',
+task runService(dependsOn: 'resolve',
+                description: 'Starts up the STUB service using NodeJS.',
                 group: 'application') << {
     logging.setLevel(LogLevel.INFO)
     ant.exec(executable: 'node',
