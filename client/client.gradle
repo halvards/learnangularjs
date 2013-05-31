@@ -120,8 +120,9 @@ task jade(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' J A D E                                   '
     println '-------------------------------------------'
-    ant.exec(executable: 'node_modules/jade/bin/jade',
+    ant.exec(executable: 'node',
             failonerror: true) {
+        ant.arg(value: 'node_modules/jade/bin/jade')
         ant.arg(value: '--pretty')
         ant.arg(value: '--out')
         ant.arg(value: 'src/main/webapp/partials')
