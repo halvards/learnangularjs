@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/halvards/learnangularjs.png)](https://travis-ci.org/halvards/learnangularjs)
+
 learnangularjs
 ==============
 
