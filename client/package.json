@@ -5,7 +5,7 @@
     "dependencies": {
         "jade": ">=0.30.0",
         "jshint": "2.1.x",
-        "karma": "0.9.x",
+        "karma": "0.8.x",
         "recess": "1.1.x"
     }
 }
