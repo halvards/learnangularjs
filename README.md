@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/halvards/learnangularjs.png)](https://travis-ci.org/halvards/learnangularjs)
-
-learnangularjs
+learnangularjs [![Build Status](https://travis-ci.org/halvards/learnangularjs.png)](https://travis-ci.org/halvards/learnangularjs)
 ==============
 
 An example [AngularJS](http://angularjs.org/) application with a Java backend.
@@ -28,6 +26,7 @@ Ensure you have the following IDEA plugins:
 
 * AngularJS
 * Gradle (bundled)
+* Jade
 * NodeJS
 * All the bundled JavaScript plugins
 
