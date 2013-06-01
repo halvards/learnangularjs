@@ -44,8 +44,9 @@ task autotest(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' U N I T  T E S T S - C O N T I N U O U S  '
     println '-------------------------------------------'
-    ant.exec(executable: 'node_modules/karma/bin/karma',
+    ant.exec(executable: 'node',
             failonerror: true) {
+        ant.arg(value: 'node_modules/karma/bin/karma')
         ant.arg(value: 'start')
         ant.arg(value: 'support/unit.conf.js')
         ant.arg(value: '--no-single-run')
@@ -61,8 +62,9 @@ task test(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' U N I T  T E S T S                        '
     println '-------------------------------------------'
-    ant.exec(executable: 'node_modules/karma/bin/karma',
-            failonerror: true) {
+    ant.exec(executable: 'node',
+             failonerror: true) {
+        ant.arg(value: 'node_modules/karma/bin/karma')
         ant.arg(value: 'start')
         ant.arg(value: 'support/unit.conf.js')
         ant.arg(value: '--single-run')
@@ -73,8 +75,9 @@ def executeScenarioTests() {
     println '-------------------------------------------'
     println ' E 2 E  T E S T S                          '
     println '-------------------------------------------'
-    ant.exec(executable: 'node_modules/karma/bin/karma',
-            failonerror: true) {
+    ant.exec(executable: 'node',
+             failonerror: true) {
+        ant.arg(value: 'node_modules/karma/bin/karma')
         ant.arg(value: 'start')
         ant.arg(value: 'support/e2e.conf.js')
         ant.arg(value: '--single-run')
@@ -88,8 +91,9 @@ task jshint(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' J S  H I N T                              '
     println '-------------------------------------------'
-    ant.exec(executable: 'node_modules/jshint/bin/jshint',
+    ant.exec(executable: 'node',
              failonerror: true) {
+        ant.arg(value: 'node_modules/jshint/bin/jshint')
         ant.arg(value: '--config')
         ant.arg(value: 'support/jshint-options.json')
         ant.arg(value: 'src/main/webapp/js/app')
@@ -103,8 +107,9 @@ task autojade(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' J A D E - C O N T I N U O U S             '
     println '-------------------------------------------'
-    ant.exec(executable: 'node_modules/jade/bin/jade',
-            failonerror: true) {
+    ant.exec(executable: 'node',
+             failonerror: true) {
+        ant.arg(value: 'node_modules/jade/bin/jade')
         ant.arg(value: '--watch')
         ant.arg(value: '--pretty')
         ant.arg(value: '--out')
@@ -121,7 +126,7 @@ task jade(dependsOn: 'resolve',
     println ' J A D E                                   '
     println '-------------------------------------------'
     ant.exec(executable: 'node',
-            failonerror: true) {
+             failonerror: true) {
         ant.arg(value: 'node_modules/jade/bin/jade')
         ant.arg(value: '--pretty')
         ant.arg(value: '--out')
@@ -137,9 +142,10 @@ task autoless(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' L E S S - C O N T I N U O U S             '
     println '-------------------------------------------'
-    new File('src/main/webapp/css').mkdirs()
-    ant.exec(executable: 'node_modules/recess/bin/recess',
+    file('src/main/webapp/css').mkdirs()
+    ant.exec(executable: 'node',
              failonerror: true) {
+        ant.arg(value: 'node_modules/recess/bin/recess')
         ant.arg(value: 'src/main/webapp/less/app.less:src/main/webapp/css/app.css')
         ant.arg(value: '--compile')
         ant.arg(value: '--watch')
@@ -154,7 +160,7 @@ task less(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' L E S S  C O M P I L E                    '
     println '-------------------------------------------'
-    new File('src/main/webapp/css').mkdirs()
+    file('src/main/webapp/css').mkdirs()
     ant.exec(executable: 'node',
              failonerror: true,
              output: 'src/main/webapp/css/app.css',
@@ -172,9 +178,9 @@ task lesslint(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' L E S S  L I N T                          '
     println '-------------------------------------------'
-    new File('src/main/webapp/css').mkdirs()
-    ant.exec(executable: 'node_modules/recess/bin/recess',
+    ant.exec(executable: 'node',
              failonerror: true) {
+        ant.arg(value: 'node_modules/recess/bin/recess')
         ant.arg(value: 'src/main/webapp/less/*.less')
     }
 }
