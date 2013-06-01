@@ -155,10 +155,11 @@ task less(dependsOn: 'resolve',
     println ' L E S S  C O M P I L E                    '
     println '-------------------------------------------'
     new File('src/main/webapp/css').mkdirs()
-    ant.exec(executable: 'node_modules/recess/bin/recess',
+    ant.exec(executable: 'node',
              failonerror: true,
              output: 'src/main/webapp/css/app.css',
-             logError: 'true') {
+             logError: true) {
+        ant.arg(value: 'node_modules/recess/bin/recess')
         ant.arg(value: 'src/main/webapp/less/app.less')
         ant.arg(value: '--compile')
     }
