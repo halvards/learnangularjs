@@ -142,6 +142,7 @@ task autoless(dependsOn: 'resolve',
         ant.arg(value: 'src/main/webapp/less/app.less:src/main/webapp/css/app.css')
         ant.arg(value: '--watch')
         ant.arg(value: 'src/main/webapp/less')
+        ant.arg(value: '--compile')
     }
 }
 
@@ -159,7 +160,8 @@ task less(dependsOn: 'resolve',
              logError: true) {
         ant.arg(value: 'node_modules/recess/bin/recess')
         ant.arg(value: 'src/main/webapp/less/app.less')
-        ant.redirector(outputproperty: 'lesscompile.out', alwayslog: true)
+        ant.arg(value: '--compile')
+        ant.redirector(outputproperty: 'lesscompile.out')
     }
     ant.condition(property: 'lesscompile.failure') {
         ant.matches(string: '${lesscompile.out}', pattern: '(failure|error)')
