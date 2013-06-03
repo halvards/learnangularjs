@@ -7,11 +7,15 @@
     <!-- Prevents the Compatibility View feature in IE7, IE8 and IE9 from kicking in -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+    <!-- Required by Bootstrap -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Allow application to be indexed by web crawlers -->
+    <meta name="fragment" content="!" />
 
     <!-- Required to support HTML5 elements in IE9 and earlier. Must appear before any stylesheets -->
     <!--[if lt IE 9]>
-    <script src="components/html5shiv/html5shiv.js"></script>
+    <script src="js/lib/html5shiv/html5shiv.js"></script>
     <![endif]-->
 
     <link rel="stylesheet" href="js/lib/bootstrap/css/bootstrap.css">
@@ -42,6 +46,8 @@
     <script src="js/app/controllers.js"></script>
     <script src="js/app/interceptors.js"></script>
     <script src="js/app/services.js"></script>
+
+    <base href="/app/">
 
     <!-- Required for the application to bootstrap in IE7 and earlier -->
     <!--[if lt IE 8]>

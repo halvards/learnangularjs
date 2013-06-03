@@ -10,4 +10,6 @@ angular.module('bookstoreApp', ['booksModule', 'httpInterceptors']).
     }]).config(['$httpProvider', function ($httpProvider) {
         $httpProvider.responseInterceptors.push('logResponseInterceptor');
         $httpProvider.responseInterceptors.push('detectErrorInterceptor');
+    }]).config(['$locationProvider', function ($locationProvider) {
+        $locationProvider.html5Mode(true);
     }]);
