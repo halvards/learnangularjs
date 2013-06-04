@@ -1,7 +1,7 @@
 learnangularjs [![Build Status](https://travis-ci.org/halvards/learnangularjs.png)](https://travis-ci.org/halvards/learnangularjs)
 ==============
 
-An example [AngularJS](http://angularjs.org/) application with a Java backend.
+An example [AngularJS](http://angularjs.org/) application with a Java back end and a NodeJS stub back end.
 
 # Requirements
 
@@ -52,6 +52,7 @@ To also see all task dependencies, run:
   * [End-to-end Testing](http://docs.angularjs.org/guide/dev_guide.e2e-testing)
 * [Internet Explorer Compatibility](http://docs.angularjs.org/guide/ie)
 * [Data Binding](http://stackoverflow.com/questions/9682092/databinding-in-angularjs/9693933#9693933)
+* [Making AJAX Applications Crawlable](https://developers.google.com/webmasters/ajax-crawling/)
 * [Egghead.io videos](http://egghead.io/)
 * [Tips and Tricks](http://deansofer.com/posts/view/14/AngularJs-Tips-and-Tricks-UPDATED)
 * [YouTube channel](https://www.youtube.com/user/angularjs)

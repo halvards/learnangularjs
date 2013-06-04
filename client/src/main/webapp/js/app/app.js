@@ -11,5 +11,8 @@ angular.module('bookstoreApp', ['booksModule', 'httpInterceptors']).
         $httpProvider.responseInterceptors.push('logResponseInterceptor');
         $httpProvider.responseInterceptors.push('detectErrorInterceptor');
     }]).config(['$locationProvider', function ($locationProvider) {
+        // Avoid hash URL fragments in HTML5 browsers: http://docs.angularjs.org/guide/dev_guide.services.$location
         $locationProvider.html5Mode(true);
+        // Change # URLs to #! to match Google's AJAX crawling scheme: https://developers.google.com/webmasters/ajax-crawling/
+        $locationProvider.hashPrefix('!');
     }]);
