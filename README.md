@@ -108,8 +108,8 @@ development usage or because they were not appropriate for this type of applicat
   its SCSS syntax is a CSS superset (just like LESS). It also opens the door to CSS frameworks like
   [Compass](http://compass-style.org/) and lightweight mixin libraries like [Bourbon](http://bourbon.io/). However, its
   JavaScript (NodeJS) implementations are still rather basic, so [Ruby](http://www.ruby-lang.org/en/) is required to
-  make good use of it. Its benefits over LESS didn't warrant this additional complication in this example application.
-  If you're already using Ruby then I'd recommend looking into Sass in place of LESS.
+  make good use of it. Its benefits didn't warrant the additional complexity in this example application. If you're
+  already using Ruby then I'd recommend looking into Sass in place of LESS.
 * [Jersey](https://jersey.java.net/) is an implementation of
   [JAX-RS, a.k.a. Java API for RESTful Services](https://jax-rs-spec.java.net/) and provides an alternative to using
   Spring MVC for the Java API back end layer. I chose Spring MVC in this example for two reasons:
