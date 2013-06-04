@@ -1,16 +1,6 @@
 def version = '1.0.0'
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-//    dependencies {
-//        classpath "net.saliman:gradle-cobertura-plugin:1.1.2"
-//    }
-}
-
 //apply plugin: 'checkstyle' // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.CheckstyleExtension.html
-//apply plugin: 'cobertura'  // https://github.com/stevesaliman/gradle-cobertura-plugin
 //apply plugin: 'findbugs'   // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html
 apply plugin: 'java'       // http://www.gradle.org/docs/current/userguide/java_plugin.html
 //apply plugin: 'jdepend'    // http://gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.JDependExtension.html
@@ -26,7 +16,6 @@ idea.module {
 }
 
 repositories {
-//    mavenLocal()  // This option fetches dependencies from your local .m2 directory if present, but it spams stdout
     mavenCentral()
 }
 
