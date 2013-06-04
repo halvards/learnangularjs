@@ -11,7 +11,7 @@ def resolveDependencies() {
     ant.exec(executable: 'npm',
              failonerror: true) {
         ant.arg(value: 'install')
-//        ant.arg(value: '--silent')
+        ant.arg(value: '--silent')
     }
 }
 
