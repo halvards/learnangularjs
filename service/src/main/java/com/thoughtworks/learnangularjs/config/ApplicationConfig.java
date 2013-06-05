@@ -9,6 +9,9 @@ import org.springframework.jmx.support.MBeanServerFactoryBean;
 @Configuration
 @ComponentScan(basePackages = {"com.thoughtworks.learnangularjs.domain"})
 public class ApplicationConfig {
+    /**
+     * Expose all Spring-managed MBeans in the JMX MBeanServer of the runtime/container
+     */
     @Bean
     public static MBeanExporter mBeanExporter() {
         MBeanExporter mBeanExporter = new MBeanExporter();
