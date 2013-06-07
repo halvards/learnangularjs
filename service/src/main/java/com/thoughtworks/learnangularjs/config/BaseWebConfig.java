@@ -1,5 +1,6 @@
 package com.thoughtworks.learnangularjs.config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -25,13 +26,18 @@ public abstract class BaseWebConfig extends WebMvcConfigurationSupport {
     @Bean
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
         RequestMappingHandlerAdapter handlerAdapter = super.requestMappingHandlerAdapter();
+        List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
         for (HttpMessageConverter<?> messageConverter : handlerAdapter.getMessageConverters()) {
             if (MappingJackson2HttpMessageConverter.class.isAssignableFrom(messageConverter.getClass())) {
-                MappingJackson2HttpMessageConverter converter = (MappingJackson2HttpMessageConverter) messageConverter;
-                converter.setPrettyPrint(true);
-                converter.setPrefixJson(true);
+                CustomPrefixJackson2HttpMessageConverter jsonConverter = new CustomPrefixJackson2HttpMessageConverter();
+                jsonConverter.setPrettyPrint(true);
+                jsonConverter.setJsonPrefix(")]}',\n"); // matches the expected JSON prefix of AngularJS
+                messageConverters.add(jsonConverter);
+            } else {
+                messageConverters.add(messageConverter);
             }
         }
+        handlerAdapter.setMessageConverters(messageConverters);
         return handlerAdapter;
     }
 }
