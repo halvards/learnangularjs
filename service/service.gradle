@@ -61,7 +61,7 @@ dependencies {
     def cglibVersion = '2.2.2'
     def commonsLang3Version = '3.1'
     def guavaVersion = '14.0.1'
-    def jacksonVersion = '2.2.1'
+    def jacksonVersion = '2.2.2'
     def jodaTimeVersion = '2.2'
     def jsonPathVersion = '0.8.1'
     def jsr250ApiVersion = '1.0'
@@ -75,12 +75,16 @@ dependencies {
     def hamcrestReflectionVersion = '0.1'
     def junitVersion = '4.11'
     def mockitoVersion = '1.9.5'
+    def hamcrestJsonVersion = '0.2'
 
     def tomcatVersion = '7.0.40'
 
     compile "org.springframework:spring-webmvc:${springFrameworkVersion}",
             "cglib:cglib:${cglibVersion}",
             "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+            "com.fasterxml.jackson.datatype:jackson-datatype-guava:${jacksonVersion}",
+            "com.fasterxml.jackson.datatype:jackson-datatype-joda:${jacksonVersion}",
+            "com.fasterxml.jackson.module:jackson-module-afterburner:${jacksonVersion}",
             "org.springframework.security:spring-security-config:${springSecurityVersion}",
             "org.springframework.security:spring-security-web:${springSecurityVersion}",
             "javax.annotation:jsr250-api:${jsr250ApiVersion}",
@@ -101,7 +105,8 @@ dependencies {
                 "org.mockito:mockito-core:${mockitoVersion}",
                 "org.springframework:spring-test:${springFrameworkVersion}",
                 "commons-cli:commons-cli:${commonsCliVersion}",
-                "com.jayway.jsonpath:json-path-assert:${jsonPathVersion}"
+                "com.jayway.jsonpath:json-path-assert:${jsonPathVersion}",
+                "uk.co.datumedge:hamcrest-json:${hamcrestJsonVersion}"
 
     providedCompile "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
                     "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",

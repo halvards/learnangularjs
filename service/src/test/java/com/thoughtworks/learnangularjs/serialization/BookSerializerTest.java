@@ -1,14 +1,14 @@
 package com.thoughtworks.learnangularjs.serialization;
 
+import java.util.Arrays;
+
+import static org.junit.Assert.assertThat;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.learnangularjs.domain.Amount;
 import com.thoughtworks.learnangularjs.domain.Book;
 import org.junit.Test;
-
-import java.util.Arrays;
-
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 
 public class BookSerializerTest {
     @Test
@@ -18,13 +18,13 @@ public class BookSerializerTest {
         String actualJsonBook = new ObjectMapper().writeValueAsString(book);
 
         String expectedJsonBook = "{" +
-                "\"id\":\"" + book.getId().toString() + "\"," +
-                "\"title\":\"book title\"," +
-                "\"authors\":[\"author 1\",\"author 2\"]," +
-                "\"description\":\"book description\"," +
-                "\"isbn13\":\"book isbn13\"," +
-                "\"price\":\"0.30\"}";
+                "'id':'" + book.getId().toString() + "'," +
+                "'title':'book title'," +
+                "'authors':['author 1','author 2']," +
+                "'description':'book description'," +
+                "'isbn13':'book isbn13'," +
+                "'price':'0.30'}";
 
-        assertThat(actualJsonBook, equalTo(expectedJsonBook));
+        assertThat(actualJsonBook, sameJSONAs(expectedJsonBook));
     }
 }

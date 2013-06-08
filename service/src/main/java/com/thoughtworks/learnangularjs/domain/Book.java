@@ -1,64 +1,56 @@
 package com.thoughtworks.learnangularjs.domain;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class Book {
-    private final UUID id;
-    private final String title;
-    private final List<String> authors;
-    private final String description;
-    private final String isbn13;
-    private final Amount price;
+    private final Map<String, Object> book;
 
     public Book(String title, List<String> authors, String description, String isbn13, Amount price) {
-        this(UUID.randomUUID(), title, authors, description, isbn13, price);
+        this.book = new ImmutableMap.Builder<String, Object>()
+                .put("id", UUID.randomUUID())
+                .put("title", title)
+                .put("authors", ImmutableList.copyOf(authors))
+                .put("description", description)
+                .put("isbn13", isbn13)
+                .put("price", price)
+                .build();
     }
 
-    // Required for JSON deserialization
     @JsonCreator
-    Book(@JsonProperty("id") UUID id,
-            @JsonProperty("title") String title,
-            @JsonProperty("authors") List<String> authors,
-            @JsonProperty("description") String description,
-            @JsonProperty("isbn13") String isbn13,
-            @JsonProperty("price") Amount price) {
-        this.id = Preconditions.checkNotNull(id);
-        this.title = Preconditions.checkNotNull(title);
-        this.authors = ImmutableList.copyOf(Preconditions.checkNotNull(authors));
-        this.description = Preconditions.checkNotNull(description);
-        this.isbn13 = Preconditions.checkNotNull(isbn13);
-        this.price = Preconditions.checkNotNull(price);
+    Book(Map<String, Object> book) {
+        this.book = ImmutableMap.copyOf(book);
     }
 
     public UUID getId() {
-        return id;
+        return UUID.fromString(book.get("id").toString());
     }
 
     public String getTitle() {
-        return title;
+        return book.get("title").toString();
     }
 
+    @SuppressWarnings("unchecked")
     public List<String> getAuthors() {
-        return authors;
+        return (List<String>) book.get("authors");
     }
 
     public String getDescription() {
-        return description;
+        return book.get("description").toString();
     }
 
     public String getIsbn13() {
-        return isbn13;
+        return book.get("isbn13").toString();
     }
 
     public Amount getPrice() {
-        return price;
+        return new Amount(book.get("price").toString());
     }
 
     @Override
