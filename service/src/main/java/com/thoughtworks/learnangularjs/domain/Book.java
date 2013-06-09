@@ -38,7 +38,7 @@ public class Book {
 
     @SuppressWarnings("unchecked")
     public List<String> getAuthors() {
-        return (List<String>) book.get("authors");
+        return ImmutableList.copyOf((List<String>) book.get("authors"));
     }
 
     public String getDescription() {
