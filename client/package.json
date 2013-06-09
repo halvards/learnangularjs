@@ -1,11 +1,11 @@
 {
-    "name": "client",
-    "version": "1.0.0",
-    "private": true,
-    "dependencies": {
-        "jade": ">=0.30.0",
-        "jshint": "2.1.x",
-        "karma": "0.8.x",
-        "recess": "1.1.x"
-    }
+  "name": "client",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "jade": ">=0.30.0",
+    "jshint": "2.1.x",
+    "karma": "0.8.x",
+    "recess": "1.1.x"
+  }
 }
