@@ -6,6 +6,7 @@
     "start": "./node_modules/supervisor/lib/cli-wrapper.js -i node_modules stubservice"
   },
   "dependencies": {
+    "connect-modrewrite": "0.3.16",
     "express": "3.2.x",
     "passport": "0.1.17",
     "passport-local": "0.1.6",

@@ -9,6 +9,7 @@ import org.apache.catalina.realm.MemoryRealm;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.commons.cli.*;
 import org.apache.tomcat.util.scan.StandardJarScanner;
+import org.tuckey.web.filters.urlrewrite.UrlRewriteFilter;
 
 public class TomcatServer {
     private static final String DEFAULT_PORT = "8000";
@@ -33,10 +34,33 @@ public class TomcatServer {
         ensureNoBrowserCaching(serviceContext);
 
         Context clientContext = tomcat.addWebapp("/app", "../client/src/main/webapp");
+        rewriteUrlsToSupportHtml5PushState(clientContext);
         ensureNoBrowserCaching(clientContext);
 
         tomcat.start();
         tomcat.getServer().await();
+    }
+
+    private void rewriteUrlsToSupportHtml5PushState(Context context) {
+        context.addFilterDef(createUrlRewriteFilterDefinition());
+        context.addFilterMap(createUrlRewriteFilterMapping());
+    }
+
+    private FilterMap createUrlRewriteFilterMapping() {
+        FilterMap urlRewriteFilterMapping = new FilterMap();
+        urlRewriteFilterMapping.setFilterName("urlRewriteFilter");
+        urlRewriteFilterMapping.addURLPattern("/*");
+        return urlRewriteFilterMapping;
+    }
+
+    private FilterDef createUrlRewriteFilterDefinition() {
+        FilterDef urlRewriteFilterDefinition = new FilterDef();
+        urlRewriteFilterDefinition.setFilterName("urlRewriteFilter");
+        urlRewriteFilterDefinition.setFilterClass(UrlRewriteFilter.class.getName());
+        urlRewriteFilterDefinition.addInitParameter("logLevel", "INFO");
+        // All requests that don't match a resource and are handled by AngularJS (e.g., /app/books) should rewrite to /(index.html)
+        urlRewriteFilterDefinition.addInitParameter("modRewriteConfText", "RewriteRule ^((?!.*(\\/css|\\/js|\\/partials)).*)$ /");
+        return urlRewriteFilterDefinition;
     }
 
     private Realm createRealm() {
@@ -46,7 +70,7 @@ public class TomcatServer {
     }
 
     private void ensureNoBrowserCaching(Context context) {
-        context.addFilterDef(createNoCacheFilter());
+        context.addFilterDef(createNoCacheFilterDefinition());
         context.addFilterMap(createNoCacheFilterMapping());
     }
 
@@ -57,7 +81,7 @@ public class TomcatServer {
         return expiresFilterMapping;
     }
 
-    private FilterDef createNoCacheFilter() {
+    private FilterDef createNoCacheFilterDefinition() {
         FilterDef expiresFilterDefinition = new FilterDef();
         expiresFilterDefinition.setFilterName("expires");
         expiresFilterDefinition.setFilterClass(ExpiresFilter.class.getName());
