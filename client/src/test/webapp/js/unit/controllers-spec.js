@@ -3,7 +3,7 @@
 describe('BooksController', function () {
   it('init should load books for sale', function () {
     var scope = {};
-    var controller = new BooksController(scope, StubBooksService());
+    var controller = new BooksController(scope, StubBooksService(), function(){});
     scope.init();
     expect(scope.books).toEqual(StubBooksService().query());
   });
