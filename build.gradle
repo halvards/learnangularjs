@@ -4,6 +4,11 @@ subprojects {
     apply plugin: 'idea'
 }
 
+// http://www.gradle.org/docs/current/userguide/gradle_wrapper.html
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.4'
+}
+
 // Ensure the IWS Workspace file is also deleted (this is not the default)
 task cleanIdea(dependsOn: [cleanIdeaProject, cleanIdeaWorkspace, cleanIdeaModule],
                type: Delete,
