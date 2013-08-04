@@ -9,9 +9,7 @@ function BooksController($scope, BooksService, Cart) {
     $scope.books = BooksService.query();
   };
 
-  $scope.addToCart = function (itemId) {
-    cart.add(itemId);
-  };
+  $scope.addToCart = cart.add;
 }
 
 function ErrorController() {

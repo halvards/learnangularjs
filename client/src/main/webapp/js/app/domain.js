@@ -14,11 +14,7 @@ angular.module('cartModule', ['ngResource']).
     var items = {}; // map itemId -> quantity
 
     Cart.prototype.add = function(itemId) {
-      if (items[itemId]) {
-        items[itemId] += 1;
-      } else {
-        items[itemId] = 1;
-      }
+      items[itemId] = items[itemId] ? items[itemId] + 1 : 1;
     };
 
     return Cart;
