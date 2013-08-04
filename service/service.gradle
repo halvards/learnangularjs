@@ -1,11 +1,27 @@
 def version = '1.0.0'
 
-//apply plugin: 'checkstyle' // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.CheckstyleExtension.html
-//apply plugin: 'findbugs'   // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html
-apply plugin: 'java'       // http://www.gradle.org/docs/current/userguide/java_plugin.html
-//apply plugin: 'jdepend'    // http://gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.JDependExtension.html
-apply plugin: 'maven'      // http://www.gradle.org/docs/current/userguide/maven_plugin.html
-apply plugin: 'war'        // http://www.gradle.org/docs/current/userguide/war_plugin.html
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.github.ben-manes:gradle-versions-plugin:0.3'
+  }
+}
+
+apply plugin: 'application'     // http://www.gradle.org/docs/current/userguide/application_plugin.html
+apply plugin: 'build-dashboard' //http://www.gradle.org/docs/current/userguide/buildDashboard_plugin.html
+//apply plugin: 'checkstyle'      // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.CheckstyleExtension.html
+//apply plugin: 'findbugs'        // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html
+apply plugin: 'java'            // http://www.gradle.org/docs/current/userguide/java_plugin.html
+//apply plugin: 'jdepend'         // http://gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.JDependExtension.html
+apply plugin: 'maven'           // http://www.gradle.org/docs/current/userguide/maven_plugin.html
+apply plugin: 'project-report'  // http://www.gradle.org/docs/current/userguide/project_reports_plugin.html
+apply plugin: 'versions'        // https://github.com/ben-manes/gradle-versions-plugin
+apply plugin: 'war'             // http://www.gradle.org/docs/current/userguide/war_plugin.html
+
+mainClassName = 'com.thoughtworks.learnangularjs.server.TomcatServer'
 
 idea.module {
     // add test source directories for the integrationTest source set
