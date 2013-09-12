@@ -11,7 +11,7 @@ buildscript {
 }
 
 apply plugin: 'application'     // http://www.gradle.org/docs/current/userguide/application_plugin.html
-apply plugin: 'build-dashboard' //http://www.gradle.org/docs/current/userguide/buildDashboard_plugin.html
+//apply plugin: 'build-dashboard' //http://www.gradle.org/docs/current/userguide/buildDashboard_plugin.html
 //apply plugin: 'checkstyle'      // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.CheckstyleExtension.html
 //apply plugin: 'findbugs'        // http://www.gradle.org/docs/current/dsl/org.gradle.api.plugins.quality.FindBugsExtension.html
 apply plugin: 'java'            // http://www.gradle.org/docs/current/userguide/java_plugin.html
@@ -83,7 +83,7 @@ dependencies {
     def jsr250ApiVersion = '1.0'
     def slf4jVersion = '1.7.5'
     def logbackVersion = '1.0.13'
-    def springFrameworkVersion = '3.2.3.RELEASE'
+    def springFrameworkVersion = '3.2.4.RELEASE'
     def springSecurityVersion = '3.1.4.RELEASE'
     def urlRewriteFilterVersion = '4.0.4'
 
@@ -94,7 +94,7 @@ dependencies {
     def mockitoVersion = '1.9.5'
     def hamcrestJsonVersion = '0.2'
 
-    def tomcatVersion = '7.0.40'
+    def tomcatVersion = '7.0.42'
 
     compile "org.springframework:spring-webmvc:${springFrameworkVersion}",
             "cglib:cglib:${cglibVersion}",
