@@ -8,12 +8,12 @@ basePath = '../';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
-  'src/main/webapp/js/lib/jquery/jquery.js',
-  'src/main/webapp/js/lib/angular/angular.js',
-  'src/main/webapp/js/lib/angular/angular-*.js',
-  'src/test/webapp/js/lib/unit/angular/angular-*.js',
-  'src/main/webapp/js/app/*.js',
-  'src/test/webapp/js/unit/*-spec.js'
+  'app/lib/jquery/jquery.js',
+  'app/lib/angular/angular.js',
+  'app/lib/angular/angular-*.js',
+  'test/lib/unit/angular/angular-*.js',
+  'app/js/*.js',
+  'test/unit/*-spec.js'
 ];
 
 // Files to be excluded

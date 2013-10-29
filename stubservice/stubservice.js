@@ -21,10 +21,10 @@ app.use(express.errorHandler()); // development only
 app.enable('trust proxy');
 
 // Handle the HTML5 push state URL feature of AngularJS by rewriting all non-resource requests to the base /app/index.html file
-app.use(modRewrite(['^\/app((?!.*(\/css|\/js|\/partials)).*)$ /app/']));
+app.use(modRewrite(['^\/app((?!.*(\/css|\/js|\/lib|\/partials)).*)$ /app/']));
 
 // Serve up the client JS application
-app.use('/app', express.static('../client/src/main/webapp'));
+app.use('/app', express.static('../client/app'));
 
 // Reuse login pages from real service
 app.use('/service/login', express.static('../service/src/main/webapp/login'));

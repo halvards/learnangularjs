@@ -33,7 +33,7 @@ public class TomcatServer {
         ((StandardJarScanner) serviceContext.getJarScanner()).setScanAllDirectories(true);
         ensureNoBrowserCaching(serviceContext);
 
-        Context clientContext = tomcat.addWebapp("/app", "../client/src/main/webapp");
+        Context clientContext = tomcat.addWebapp("/app", "../client/app");
         rewriteUrlsToSupportHtml5PushState(clientContext);
         ensureNoBrowserCaching(clientContext);
 
@@ -59,7 +59,7 @@ public class TomcatServer {
         urlRewriteFilterDefinition.setFilterClass(UrlRewriteFilter.class.getName());
         urlRewriteFilterDefinition.addInitParameter("logLevel", "INFO");
         // All requests that don't match a resource and are handled by AngularJS (e.g., /app/books) should rewrite to /(index.html)
-        urlRewriteFilterDefinition.addInitParameter("modRewriteConfText", "RewriteRule ^((?!.*(\\/css|\\/js|\\/partials)).*)$ /");
+        urlRewriteFilterDefinition.addInitParameter("modRewriteConfText", "RewriteRule ^((?!.*(\\/css|\\/js|\\/lib|\\/partials)).*)$ /");
         return urlRewriteFilterDefinition;
     }
 

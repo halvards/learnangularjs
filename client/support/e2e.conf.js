@@ -8,7 +8,7 @@ basePath = '../';
 files = [
   ANGULAR_SCENARIO,
   ANGULAR_SCENARIO_ADAPTER,
-  'src/test/webapp/js/e2e/*-scenario.js'
+  'test/e2e/*-scenario.js'
 ];
 
 // Files to be excluded

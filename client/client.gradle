@@ -92,7 +92,7 @@ task jshint(dependsOn: 'resolve',
         ant.arg(value: 'node_modules/jshint/bin/jshint')
         ant.arg(value: '--config')
         ant.arg(value: 'support/jshint-options.json')
-        ant.arg(value: 'src/main/webapp/js/app')
+        ant.arg(value: 'app/js')
     }
 }
 
@@ -108,8 +108,8 @@ task autojade(dependsOn: 'resolve',
         ant.arg(value: '--watch')
         ant.arg(value: '--pretty')
         ant.arg(value: '--out')
-        ant.arg(value: 'src/main/webapp/partials')
-        ant.arg(value: 'src/main/webapp/views')
+        ant.arg(value: 'app/partials')
+        ant.arg(value: 'app/views')
     }
 }
 
@@ -124,8 +124,8 @@ task jade(dependsOn: 'resolve',
         ant.arg(value: 'node_modules/jade/bin/jade')
         ant.arg(value: '--pretty')
         ant.arg(value: '--out')
-        ant.arg(value: 'src/main/webapp/partials')
-        ant.arg(value: 'src/main/webapp/views')
+        ant.arg(value: 'app/partials')
+        ant.arg(value: 'app/views')
     }
 }
 
@@ -136,12 +136,12 @@ task autoless(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' L E S S - C O N T I N U O U S             '
     println '-------------------------------------------'
-    file('src/main/webapp/css').mkdirs()
+    file('app/css').mkdirs()
     ant.exec(executable: 'node', failonerror: true) {
         ant.arg(value: 'node_modules/recess/bin/recess')
-        ant.arg(value: 'src/main/webapp/less/app.less:src/main/webapp/css/app.css')
+        ant.arg(value: 'app/less/app.less:app/css/app.css')
         ant.arg(value: '--watch')
-        ant.arg(value: 'src/main/webapp/less')
+        ant.arg(value: 'app/less')
         ant.arg(value: '--compile')
     }
 }
@@ -153,13 +153,13 @@ task less(dependsOn: 'resolve',
     println '-------------------------------------------'
     println ' L E S S  C O M P I L E                    '
     println '-------------------------------------------'
-    file('src/main/webapp/css').mkdirs()
+    file('app/css').mkdirs()
     ant.exec(executable: 'node',
              failonerror: true,
-             output: 'src/main/webapp/css/app.css',
+             output: 'app/css/app.css',
              logError: true) {
         ant.arg(value: 'node_modules/recess/bin/recess')
-        ant.arg(value: 'src/main/webapp/less/app.less')
+        ant.arg(value: 'app/less/app.less')
         ant.arg(value: '--compile')
         ant.redirector(outputproperty: 'lesscompile.out')
     }
@@ -178,7 +178,7 @@ task lesslint(dependsOn: 'resolve',
     println '-------------------------------------------'
     ant.exec(executable: 'node', failonerror: true) {
         ant.arg(value: 'node_modules/recess/bin/recess')
-        ant.arg(value: 'src/main/webapp/less/app.less')
+        ant.arg(value: 'app/less/app.less')
         ant.arg(value: '--noIDs')
         ant.arg(value: 'false')
         ant.redirector(outputproperty: 'lesslint.out', alwayslog: true)
