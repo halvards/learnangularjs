@@ -1,6 +1,6 @@
 'use strict';
 
-var bookstoreApp = angular.module('bookstoreApp', ['booksModule', 'cartModule', 'httpInterceptors']);
+var bookstoreApp = angular.module('bookstoreApp', ['ngRoute', 'booksModule', 'cartModule', 'httpInterceptors']);
 
 bookstoreApp.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.
