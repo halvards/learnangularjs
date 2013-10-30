@@ -1,7 +1,7 @@
 // Configuration file for unit tests
 // http://karma-runner.github.com/0.10/config/configuration-file.html
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     // used to resolve files and exclude
     basePath: '../',
@@ -21,16 +21,24 @@ module.exports = function(config) {
     // list of files to exclude
     exclude: [],
 
-    preprocessors: {},
+    preprocessors: {
+      'app/js/*.js': ['coverage']
+    },
 
     // use dots reporter, as travis terminal does not support escaping sequences
     // possible values: 'dots', 'progress'
-    reporters: ['progress', 'junit'],
+    reporters: ['progress', 'junit', 'coverage'],
 
     junitReporter: {
       // will be resolved to basePath (in the same way as files/exclude patterns)
       outputFile: 'build/unit-test-report.xml',
       suite: 'unit'
+    },
+
+    // possible values of type: html (default), lcov (lcov and html), lcovonly, text, text-summary, cobertura (xml format)
+    coverageReporter: {
+      type : 'html',
+      dir : 'build/coverage/'
     },
 
     // test server server port
@@ -72,7 +80,8 @@ module.exports = function(config) {
       'karma-firefox-launcher',
       'karma-phantomjs-launcher',
       'karma-junit-reporter',
-      'karma-commonjs'
+      'karma-commonjs',
+      'karma-coverage'
     ]
   });
 };
