@@ -5,7 +5,9 @@
   "dependencies": {
     "jade": ">=0.30.0",
     "jshint": "2.1.x",
-    "karma": "0.8.x",
+    "karma": "0.10.x",
+    "karma-commonjs": "*",
+    "karma-junit-reporter": "*",
     "phantomjs": "1.9.x",
     "protractor": "0.12.x",
     "recess": "1.1.x",

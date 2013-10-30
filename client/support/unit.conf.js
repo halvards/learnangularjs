@@ -1,52 +1,78 @@
 // Configuration file for unit tests
-// http://karma-runner.github.com/0.8/config/configuration-file.html
+// http://karma-runner.github.com/0.10/config/configuration-file.html
 
-// Used to resolve files, relative to this file
-basePath = '../';
+module.exports = function(config) {
+  config.set({
+    // used to resolve files and exclude
+    basePath: '../',
 
-// Files to load in the browser
-files = [
-  JASMINE,
-  JASMINE_ADAPTER,
-  'app/lib/jquery/jquery.js',
-  'app/lib/angular/angular.js',
-  'app/lib/angular/angular-*.js',
-  'test/lib/unit/angular/angular-*.js',
-  'app/js/*.js',
-  'test/unit/*-spec.js'
-];
+    frameworks: ['jasmine', 'commonjs'],
 
-// Files to be excluded
-exclude = [];
+    // list of files / patterns to load in the browser
+    files: [
+      'app/lib/jquery/jquery.js',
+      'app/lib/angular/angular.js',
+      'app/lib/angular/angular-*.js',
+      'test/lib/unit/angular/angular-*.js',
+      'app/js/*.js',
+      'test/unit/*-spec.js'
+    ],
 
-// How progress will be reported. Possible values: dots, progress, junit, growl, coverage
-reporters = ['progress', 'junit'];
+    // list of files to exclude
+    exclude: [],
 
-// Test runner server port
-port = 9879;
+    preprocessors: {},
 
-// Command line interface port
-runnerPort = 9103;
+    // use dots reporter, as travis terminal does not support escaping sequences
+    // possible values: 'dots', 'progress'
+    reporters: ['progress', 'junit'],
 
-// Enable / disable colors in the output (reporters and logs)
-colors = true;
+    junitReporter: {
+      // will be resolved to basePath (in the same way as files/exclude patterns)
+      outputFile: 'build/unit-test-report.xml',
+      suite: 'unit'
+    },
 
-// Possible values: LOG_DISABLE, LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG
-logLevel = LOG_INFO;
+    // test server server port
+    port: 9879,
 
-// Set to true to execute tests whenever files change
-autoWatch = true;
+    // enable / disable colors in the output (reporters and logs)
+    colors: true,
 
-// List of browsers to run tests. Possible values: Chrome, ChromeCanary, Firefox, Opera, Safari, PhantomJS
-browsers = ['PhantomJS'];
+    // level of logging
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    logLevel: config.LOG_INFO,
 
-// If browser does not capture in given timeout [ms], kill it
-captureTimeout = 60000;
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: true,
 
-// If true, it captures browsers, runs tests and exits with exit code 0 if all tests passed, otherwise exit code 1
-singleRun = false;
+    // Start these browsers, currently available:
+    // - Chrome
+    // - ChromeCanary
+    // - Firefox
+    // - Opera
+    // - Safari (only Mac)
+    // - PhantomJS
+    // - IE (only Windows)
+//    browsers: [process.env.TRAVIS ? 'Firefox' : 'Chrome'],
+    browsers: ['PhantomJS'],
 
-junitReporter = {
-  outputFile: 'build/unit-test-report.xml',
-  suite: 'unit'
+    // If browser does not capture in given timeout [ms], kill it
+    captureTimeout: 60000,
+
+    // If true, it captures browsers, runs tests and exits with exit code 0 if all tests passed, otherwise exit code 1
+    singleRun: false,
+
+    // report which specs are slower than 500ms
+    reportSlowerThan: 1000,
+
+    plugins: [
+      'karma-jasmine',
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-phantomjs-launcher',
+      'karma-junit-reporter',
+      'karma-commonjs'
+    ]
+  });
 };
