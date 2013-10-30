@@ -6,6 +6,10 @@
     "jade": ">=0.30.0",
     "jshint": "2.1.x",
     "karma": "0.8.x",
-    "recess": "1.1.x"
+    "phantomjs": "1.9.x",
+    "protractor": "0.12.x",
+    "recess": "1.1.x",
+    "selenium-standalone": "2.37.0",
+    "selenium-webdriver": "2.37.0"
   }
 }

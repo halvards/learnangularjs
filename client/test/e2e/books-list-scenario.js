@@ -1,12 +1,13 @@
 'use strict';
 
-/* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
+/* https://github.com/angular/protractor */
 
-describe('Bookstore App', function () {
-  it('should list novels', function () {
-    browser().navigateTo('/app/');
-    window.top.console.log("logging works");
-    expect(browser().location().url()).toBe('/books');
-    expect(element('#booksforsale tbody tr', 'List of books for sale').count()).toBe(10);
+describe('Bookstore App Protractor', function () {
+  it('should list novels', function (done) {
+    browser.get('/app/');
+    console.log("logging works");
+    expect(browser.getCurrentUrl()).toBe(browser.baseUrl + '/app/books');
+    expect(element.all(by.css('#booksforsale tbody tr')).count()).toBe(10);
+    expect(element.all(by.repeater('book in books')).count()).toBe(10);
   });
 });

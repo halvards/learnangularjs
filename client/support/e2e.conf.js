@@ -1,53 +1,89 @@
-// Configuration file for end to end tests
-// http://karma-runner.github.com/0.8/config/configuration-file.html
+// https://raw.github.com/angular/protractor/0.12.0/referenceConf.js
 
-// Used to resolve files, relative to this file
-basePath = '../';
+exports.config = {
 
-// Files to load in the browser
-files = [
-  ANGULAR_SCENARIO,
-  ANGULAR_SCENARIO_ADAPTER,
-  'test/e2e/*-scenario.js'
-];
+  seleniumServerJar: './node_modules/selenium-standalone/.selenium/2.37.0/server.jar',
 
-// Files to be excluded
-exclude = [];
+  // The port to start the selenium server on, or null if the server should
+  // find its own unused port.
+  seleniumPort: null,
 
-// How progress will be reported. Possible values: dots, progress, junit, growl, coverage
-reporters = ['progress', 'junit'];
+  // Chromedriver location is used to help the selenium standalone server
+  // find chromedriver. This will be passed to the selenium jar as
+  // the system property webdriver.chrome.driver. If null, selenium will
+  // attempt to find chromedriver using PATH.
+  chromeDriver: './node_modules/selenium-standalone/.selenium/2.37.0/chromedriver',
 
-// Test runner server port
-port = 9880;
+  // Additional command line options to pass to selenium. For example,
+  // if you need to change the browser timeout, use
+  // seleniumArgs: ['-browserTimeout=60'],
+  seleniumArgs: [],
 
-// Command line interface port
-runnerPort = 9104;
+  // The address of a running selenium server. If specified, Protractor will
+  // connect to an already running instance of selenium. This usually looks like
+  // seleniumAddress: 'http://localhost:4444/wd/hub'
+  seleniumAddress: null,
 
-// Enable / disable colors in the output (reporters and logs)
-colors = true;
+  // The timeout for each script run on the browser. This should be longer
+  // than the maximum time your application needs to stabilize between tasks.
+  allScriptsTimeout: 11000,
 
-// Possible values: LOG_DISABLE, LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG
-logLevel = LOG_INFO;
+  // What tests to run. Spec patterns are relative to the location of this config.
+  specs: [
+    '../test/e2e/*-scenario.js',
+  ],
 
-// Set to true to execute tests whenever files change
-autoWatch = false;
+  // Capabilities to be passed to the webdriver instance.
+  // See: https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
+  capabilities: {
+    'browserName': 'phantomjs'
+//    'browserName': 'chrome'
+  },
 
-// List of browsers to run tests. Possible values: Chrome, ChromeCanary, Firefox, Opera, Safari, PhantomJS
-browsers = ['PhantomJS'];
+  // A base URL for your application under test. Calls to protractor.get()
+  // with relative paths will be prepended with this.
+  baseUrl: 'http://localhost:8000',
 
-// If browser does not capture in given timeout [ms], kill it
-captureTimeout = 60000;
+  // Selector for the element housing the angular app - this defaults to
+  // body, but is necessary if ng-app is on a descendant of <body>  
+  rootElement: 'body',
 
-// If true, it captures browsers, runs tests and exits with exit code 0 if all tests passed, otherwise exit code 1.
-// If false, the test server and browser keeps running after tests are complete. This is usefulfor fast test feedback.
-singleRun = true;
+  // A callback function called once protractor is ready and available, and
+  // before the specs are executed
+  // You can specify a file containing code to run by setting onPrepare to
+  // the filename string.
+  onPrepare: function() {
+    // At this point, global 'protractor' object will be set up, and jasmine
+    // will be available. For example, you can add a Jasmine reporter with:
+    //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
+    //         'outputdir/', true, true));
+  },
 
-// A map of path-proxy pairs
-proxies = {
-  '/': 'http://localhost:8000/'
-};
-
-junitReporter = {
-  outputFile: 'build/e2e-test-report.xml',
-  suite: 'e2e'
+  // The params object will be passed directly to the protractor instance,
+  // and can be accessed from your test. It is an arbitrary object and can
+  // contain anything you my need in your test.
+  // This can be changed via the command line as:
+  //   --params.login.user 'Joe'
+  params: {
+    login: {
+      user: 'Jane',
+      password: '1234'
+    }
+  },
+  
+  // ----- Options to be passed to minijasminenode -----
+  //
+  // See the full list at https://github.com/juliemr/minijasminenode
+  jasmineNodeOpts: {
+    // onComplete will be called just before the driver quits.
+    onComplete: null,
+    // If true, display spec names.
+    isVerbose: false,
+    // If true, print colors to the terminal.
+    showColors: true,
+    // If true, include stack traces in failures.
+    includeStackTrace: true,
+    // Default time to wait in ms before a test fails.
+    defaultTimeoutInterval: 30000
+  }
 };
